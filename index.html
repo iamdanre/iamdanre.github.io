@@ -14,6 +14,7 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link href="https://vjs.zencdn.net/7.10.2/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="index.css">
 </head>
 
@@ -102,17 +103,17 @@
         <div id="artifact">
             <h2>ArtiFact</h2>
             <div id="videos">
-                <video width="30%" autoplay loop muted playsinline>
+                <video width="32%" autoplay loop muted playsinline>
                     <source src="img/artifact/mac.webm" type="video/webm">
                 </video>
-                <video width="30%" autoplay loop muted playsinline>
+                <video width="32%" autoplay loop muted playsinline>
                     <source src="img/artifact/iPad.webm" type="video/webm">
                 </video>
-                <video width="30%" autoplay loop muted playsinline>
+                <video width="32%" autoplay loop muted playsinline>
                     <source src="img/artifact/iPhone.webm" type="video/webm">
                 </video>
             </div>
-            <video width="60%" autoplay loop muted playsinline>
+            <video class="video-js vjs-fluid" data-setup='{}' autoplay loop muted playsinline>
                 <source src="img/artifact/artifactdemo.mp4" type="video/mp4">
             </video>
             <p>ArtiFact is a third-year software engineering project by team 5Bits from the University of Pretoria for
@@ -150,8 +151,8 @@
         <br>
         <div id="Haptic Hands">
             <h2>Haptic Hands</h2>
-            <div class="videoWrapper haptic">
-                <video autoplay loop muted playsinline>
+            <div class="haptic">
+                <video class="video-js vjs-fluid" data-setup='{}' autoplay loop muted playsinline>
                     <source src="img/hapticHands/haptic.mp4" type="video/mp4">
                 </video>
             </div>
@@ -224,6 +225,7 @@
         made on earth by a human <br> <a href="https://github.com/iamdanre" target="_blank">iamdanre</a>
     </div>
     <script src="index.js" type="text/javascript"></script>
+    <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
 </body>
 
 </html>
