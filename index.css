@@ -483,10 +483,6 @@ button:focus {
   align-self: flex-start;
 }
 
-#artifactimg {
-  width: 50%;
-}
-
 .videoWrapper{
   overflow:hidden;
   padding-bottom:56.25%;
@@ -499,4 +495,14 @@ button:focus {
   height:100%;
   width:100%;
   position:absolute;
+}
+
+.haptic {
+
+  left: 50%;
+  min-height: 100%;
+  min-width: 100%;
+  position: relative;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
