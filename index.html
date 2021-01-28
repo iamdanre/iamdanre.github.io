@@ -1,61 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8" />
-	<title>Danré Retief</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<link href='http://fonts.googleapis.com/css?family=Lato:300,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="style.css" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>danré</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="img/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/fav/favicon-16x16.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-	<header>
-		<h1>Danré</h1>
-		<p>Developer and designer</p>
-	</header>
-	
-	<div class="container">
-		<section class="center">
-			<h1>About me</h1>
-			<p>
-				I am a software developer and technology enthusiast. Born and raised in Namibia but now stay in South Africa. My primary interests in computing revolve around networking and communications, the hardware and software that allow us to communicate at lightspeed (｡◕‿◕｡)
-			</p>
-		</section>
-		<hr>
-	</div>
-	<div class="container">
-		<section class="education">	
-			<h2>B.S. Information Technology, University of Pretoria.</h2>
-		</section>
-		<hr>
-		<section>
-			<div class="row">
-				<div>
-					<h1>Skills</h1>
-					
-					HTML<br>
-					Javascript<br>
-					CSS<br>
-					PHP<br>
-					Bootstrap<br>
-					C#<br>
-					JQuery<br>
-					Java<br>
-					C++<br>
-					Python<br>
-					Django<br>
-					SQL<br>
-					Mongo<br>
-					Node.js<br>
-					Angular<br>
-					Ionic<br>
-					Photoshop<br>
-					Git<br>
+    <div id="loading">
+        <div id="spinner"></div>
+    </div>
+    <div id="magnify">
+        <h1 onclick="closemagnify()"><i class="fas fa-times"></i></h1>
+        <div id="img_here"></div>
+    </div>
+    <header id="header" class="animate__animated animate__slideInDown" style="animation-delay:1.8s;"
+        onclick="$('html, body').animate({scrollTop: 0},1000);">
+        <table>
+            <tr>
+                <td id="logo"> <span class="blink_me">❯_</span> danré</td>
+            </tr>
+        </table>
+    </header>
+    <table id="top_part">
+        <tr>
+            <td id="about" class="animate__animated animate__slideInLeft" style="animation-delay:2s;">
+                <h1 id="text">software developer.<br>full stack web.<br>UX/UI, design.</h1>
+                <button class="btn_one" id="whyMe">why me?</button><br>
+                <table>
+                    <tr>
+                        <td class="animate__animated animate__zoomIn" style="animation-delay:2.2s;"><a class="social" href="https://github.com/iamdanre" target="_blank"><i
+                                    class="fab fa-github"></i></a></td>
+                        <td class="animate__animated animate__zoomIn" style="animation-delay:2.4s;"><a class="social" href="https://open.spotify.com/user/ob7mvyi83kza9lw510kipb786?si=Z31DBcGBRyWuYXXsWrIQeg" target="_blank"><i
+                                    class="fab fa-spotify"></i></a></td>
+                        <td class="animate__animated animate__zoomIn" style="animation-delay:2.6s;"><a class="social" href="https://www.instagram.com/_danre_/" target="_blank"><i
+                                    class="fab fa-instagram"></i></a></td>
+                        <td class="animate__animated animate__zoomIn" style="animation-delay:2.8s;"><a class="social" href="https://t.me/xp_x_qx/" target="_blank"><i
+                                    class="fab fa-telegram-plane"></i></a></td>
+                        <td class="animate__animated animate__zoomIn" style="animation-delay:3.0s;"><a class="social" href="https://iamdanre.tumblr.com/" target="_blank"><i
+                                    class="fab fa-tumblr"></i></a></td>
+                    </tr>
+                </table>
+            </td>
+            <td id="rightImage" class="animate__animated animate__bounceInRight" style="animation-delay:2.2s;"></td>
+        </tr>
+    </table>
 
-				</div>
-			</div>
-		</section>
-		<hr>
-	</div>
+    <div id="skills">
+        <h1>skills</h1>
+        <div class="skill-grid">
+            <div class="skill-grid-cell">
+                <h2>front:</h2>
+                <li>HTML5</li>
+                <li>CSS/Sass</li>
+                <li>[Type/Java]script</li>
+                <li>Angular</li>
+                <li>Vue</li>
+                <li>Ionic</li>
+            </div>
+            <div class="skill-grid-cell">
+                <h2>back:</h2>
+                <li>C++</li>
+                <li>C#</li>
+                <li>Java</li>
+                <li>Node</li>
+                <li>Python</li>
+                <li>PHP</li>
+                <li>MongoDB</li>
+                <li>MySQL/PostgreSQL</li>
+                <li>Neo4j</li>
+            </div>
+            <div class="skill-grid-cell">
+                <h2>other:</h2>
+                <li>Photoshop/GIMP</li>
+                <li>Microsoft Office</li>
+                <li>Git</li>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="work">
+        <h1>work</h1>
+        <br>
+        <div id="artifact">
+            <h2>ArtiFact</h2>
+            <div id="videos">
+                <video width="30%" autoplay loop muted playsinline>
+                    <source src="img/artifact/mac.webm" type="video/webm">
+                </video>
+                <video width="30%" autoplay loop muted playsinline>
+                    <source src="img/artifact/iPad.webm" type="video/webm">
+                </video>
+                <video width="30%" autoplay loop muted playsinline>
+                    <source src="img/artifact/iPhone.webm" type="video/webm">
+                </video>
+            </div>
+            <video width="60%" autoplay loop muted playsinline>
+                <source src="img/artifact/artifactdemo.mp4" type="video/mp4">
+            </video>
+            <p>ArtiFact is a third-year software engineering project by team 5Bits from the University of Pretoria for
+                our client EPI-USE.<br>
+                The system uses artificial intelligence to analyse bodies of text and determine the likelihood of it
+                being fake news.<br>
+                <a href="https://taydos.github.io/">Thato</a> and I were in charge of the front-end. Using Angular,
+                Firebase, Typescript and modern web technologies, we developed a Progressive Web App which makes it
+                platform-agnostic, and a handy Chrome extension lets you check your news on the fly.<br>
+                Check it out on <a href="https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector"
+                    target="_blank">Github</a>!
+            </p>
+        </div>
+<br>
+        <div id="Angel Academy">
+            <h2>Angel Academy Daycare</h2>
+            <div class="videoWrapper">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/KQMULsrBfc4" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <p>A community project developed for a pre-primary school in Mamelodi, Pretoria.</p>
+        </div>
+        <br>
+
+        <div id="Lessor">
+            <h2>Lessor</h2>
+            <img width="40%" src="img/lessor/lessor.png">
+            <p><br>
+                Airbnb clone written in PHP. Project I did for a multimedia course. Code's on <a href="https://haptichands.net/">Github</a>.
+            </p>
+        </div>
+
+<br>
+        <div id="Haptic Hands">
+            <h2>Haptic Hands</h2>
+            <div class="videoWrapper">
+            <video autoplay loop muted playsinline>
+                <source src="img/hapticHands/haptic.mp4" type="video/mp4">
+            </video>
+        </div>
+            <p>Website for my twin sister's Kinderkinetics practice. Check it out <a href="https://haptichands.net/">here</a>.
+            </p>
+        </div>
+
+    </div>
+    <div id="bio">
+        <h1>about</h1>
+        <p>
+            Hi, I'm danré.
+        </p>
+        Developer of software and designer of user experiences. I have formal education in computer science, informatics and multimedia and knack for creative problem solving.
+        <p>
+        </p>
+    </div>
+    <div id="contact">
+        <h1>contact</h1>
+        <table>
+            <tr>
+                <td>
+                    <div id="inner_div">
+                        <table id="inner_table">
+                            <tr>
+                                <td><i class="fas fa-phone"></i> &nbsp; +27 78 458 5144</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-at"></i> &nbsp; dev.danre@icloud.com</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-map-marker-alt"></i>
+                                    <div id="address">
+                                        earth
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="social" href="https://github.com/iamdanre" target="_blank"><i class="fab fa-github"></i></a>
+                                    <a class="social" href="https://open.spotify.com/user/ob7mvyi83kza9lw510kipb786?si=Z31DBcGBRyWuYXXsWrIQeg" target="_blank"><i class="fab fa-spotify"></i></a>
+                                    <a class="social" href="https://www.instagram.com/_danre_/" target="_blank"><i class="fab fa-instagram"></i></a>
+                                    <a class="social" href="https://t.me/xp_x_qx/" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+                                    <a class="social" href="https://iamdanre.tumblr.com/" target="_blank"><i class="fab fa-tumblr"></i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+                <td>
+                    <form action="https://airform.io/dev.danre@icloud.com" method="POST">
+                        <input name="name" type="text" placeholder="name">
+                        <input name="email" type="email" placeholder="email" required><br>
+                        <textarea name="message" placeholder="your message" rows="5" required></textarea><br>
+                        <button class="btn_one" type="submit">send 🚀</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="footer">
+        made on earth by a human <br> <a href="https://github.com/iamdanre" target="_blank">iamdanre</a>
+    </div>
+    <script src="index.js" type="text/javascript"></script>
 </body>
+
 </html>
