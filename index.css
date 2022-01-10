@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap');
 body {
     font-family: "Inter", sans-serif;
     padding: 0px;
     margin: 0px;
     max-width: 100vw;
     overflow-x: hidden;
-    scroll-behavior: smooth;
     color: #fff;
     background: #252422;
 }
