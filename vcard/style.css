@@ -8,7 +8,7 @@ body {
 }
 
 p {
-    line-height: 1.5;
+    line-height: 1.4;
     margin: 0
 }
 
@@ -162,8 +162,8 @@ main {
 }
 
 #profilePhoto {
-    width: 10rem;
-    height: 10rem;
+    width: 1rem;
+    height: 1rem;
     border-radius: 100%;
     box-sizing: content-box;
     pointer-events: none;
@@ -179,7 +179,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
+    margin-top: 0.7rem;
     line-height: 1.25;
     word-break: break-word
 }

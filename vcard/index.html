@@ -6,23 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <meta name="url" content="https://iamdanre.github.io/vcard/">
-    <meta property="og:title" content="danré ಠ_ಠ">
+    <meta property="og:title" content="danré">
     <meta property="twitter:title" content="danré ಠ_ಠ">
     <script>
         "http" == window.location.href.substr(0, 4) && "/" != window.location.href.slice(-1) && window.location.replace(window.location.href + "/");
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter&amp;display=swap" rel="stylesheet">
-    <link rel="manifest" href="manifest.webmanifest">
-    <title>ಠ_ಠ</title>
+    <title>danré</title>
     <style>
         #body {
-            font-family: sans-serif;
+            font-family: 'Inter', sans-serif
         }
-
+        
         input[type='range']::-moz-range-track {
             background: none;
         }
-
+        
         input[type='range']::-moz-range-thumb {
             -moz-appearance: none;
             width: 1.5rem;
@@ -33,7 +32,7 @@
             z-index: 3;
             cursor: pointer;
         }
-
+        
         input[type='range']::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 1.5rem;
@@ -44,19 +43,19 @@
             z-index: 3;
             cursor: pointer;
         }
-
+        
         .iconColor {
             color: #fff;
         }
-
+        
         .cardColor {
             false;
         }
-
+        
         .textColor {
             color: #fff !important;
         }
-
+        
         .seekbarColor {
             background: #725cab80 !important
         }
@@ -74,8 +73,7 @@
 <body id="body">
     <div id="modal" style="background-color: rgb(13, 17, 23); visibility: hidden; top: 2rem; opacity: 0;">
         <a id="close" class="closeColor">
-            <div class="icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
-                    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
+            <div class="icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
                     <path style="fill:none" d="M0 0h24v24H0z"></path>
                     <path d="M18 6 6 18M6 6l12 12" style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:2px">
                     </path>
@@ -83,13 +81,10 @@
         </a>
         <div id="keyView">
             <p class="textColor">
-                Use my public key to send me encrypted messages
+                use my public key to send me encrypted messages
             </p>
-            <a download="" target="_blank" id="dlKey" rel="noreferrer" tabindex="-1"
-                style="background-color: rgb(114, 92, 171);" href="./danré ಠ_ಠ's public key.asc">
-                <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                        xml:space="preserve"
-                        style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
+            <a download="" target="_blank" id="dlKey" rel="noreferrer" tabindex="-1" style="background-color: rgb(114, 92, 171);" href="./danré ಠ_ಠ's public key.asc">
+                <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
                         <path style="fill:none" d="M0 0h24v24H0z"></path>
                         <path d="M21 15v4c0 1.097-.903 2-2 2H5c-1.097 0-2-.903-2-2v-4m4-5 5 5 5-5m-5 5V3"
                             style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:2px"></path>
@@ -98,7 +93,7 @@
         </div>
         <div id="copyView">
             <p class="textColor">
-                Copy and send the URL to share my Business Card
+                copy and send the URL to share my business card
             </p> <button id="copyURL" style="background-color: rgb(114, 92, 171);">
                 <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                         xml:space="preserve"
@@ -113,17 +108,15 @@
         </div>
         <div id="qrView" class="textColor">
             <div id="qr"></div>
-            <h3>Scan the QR Code</h3>
-            <p>to view my Business Card on another device</p>
+            <h3>scan the QR code</h3>
+            <p>to view my business card on another device</p>
         </div>
     </div>
     <header>
         <div id="topActions" style="display: none;">
             <div>
                 <a id="share">
-                    <div class="icon topAction"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                            xml:space="preserve"
-                            style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:2">
+                    <div class="icon topAction"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:2">
                             <g>
                                 <path style="fill:none" d="M0 0h24v24H0z"></path>
                                 <clipPath id="a">
@@ -144,9 +137,7 @@
                         </svg></div>
                 </a>
                 <a id="showQR">
-                    <div class="icon topAction"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                            xml:space="preserve"
-                            style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
+                    <div class="icon topAction"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
                             <path style="fill:none" d="M0 0h24v24H0z"></path>
                             <path d="M4 4h4v4H4V4Zm0 12h4v4H4v-4ZM16 4h4v4h-4V4Z"
                                 style="fill:none;stroke:#fff;stroke-width:2px">
@@ -159,17 +150,14 @@
             </div>
         </div>
     </header>
-    <main style="background-color: rgb(13, 17, 23); margin-top: 5rem;"><img
-            class="animate__animated animate__pulse animate__infinite" id="profilePhoto" src="./d.png" alt="Photo">
+    <main style="background-color: rgb(13, 17, 23); margin-top: 5rem;"><img class="animate__animated animate__pulse animate__infinite" id="profilePhoto" src="./d.png" alt="Photo">
         <div id="info" class="textColor">
             <p class="name">
-                _danré_
+                danré
             </p>
         </div>
-        <a id="cta" rel="noreferrer" download="" target="_blank" aria-label="Save Contact"
-            style="background-color: rgb(114, 92, 171);" href="danré ṑ.x.ṓ.vcf">
-            <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
-                    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
+        <a id="cta" rel="noreferrer" download="" target="_blank" aria-label="Save Contact" style="background-color: rgb(114, 92, 171);" href="danré ṑ.x.ṓ.vcf">
+            <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
                     <path style="fill:none" d="M0 0h24v24H0z"></path>
                     <circle cx="8.5" cy="7" r="4" style="fill:none;stroke:#fff;stroke-width:2.29px"
                         transform="matrix(.875 0 0 .875 4.563 -.625)"></circle>
@@ -178,17 +166,13 @@
                     <path d="M104 168v6m3-3-3 3-3-3" style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:2px"
                         transform="translate(-92 -152)"></path>
                 </svg></div>
-            <p class="iconColor">Save Contact</p>
+            <p class="iconColor">save contact</p>
         </a>
         <div class="actions">
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a href="tel:+27784585144" target="_blank" rel="noopener noreferrer" aria-label="Mobile"
-                        style="background-color: rgb(114, 92, 171);">
-                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-phone-call" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                    <a href="tel:+27784585144" target="_blank" rel="noopener noreferrer" aria-label="Mobile" style="background-color: rgb(114, 92, 171);">
+                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-phone-call" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path
                                     d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2">
@@ -199,71 +183,55 @@
 
                     </a>
                     <p class="textColor">
-                        Mobile
+                        phone
                     </p>
                 </div>
             </div>
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a href="mailto:dev.danre@icloud.com" target="_blank" rel="noopener noreferrer" aria-label="Email"
-                        style="background-color: rgb(114, 92, 171);">
-                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24"
-                                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round">
+                    <a href="mailto:dev.danre@icloud.com" target="_blank" rel="noopener noreferrer" aria-label="Email" style="background-color: rgb(114, 92, 171);">
+                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <rect x="3" y="5" width="18" height="14" rx="2"></rect>
                                 <polyline points="3 7 12 13 21 7"></polyline>
                             </svg></div>
                     </a>
                     <p class="textColor">
-                        Email
+                        email
                     </p>
                 </div>
             </div>
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a href="https://t.me/xp_x_qx" target="_blank" rel="noopener noreferrer" aria-label="Telegram"
-                        style="background-color: rgb(114, 92, 171);">
-                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-brand-telegram" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                    <a href="https://t.me/xp_x_qx" target="_blank" rel="noopener noreferrer" aria-label="Telegram" style="background-color: rgb(114, 92, 171);">
+                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-telegram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4"></path>
                             </svg></div>
                     </a>
                     <p class="textColor">
-                        Telegram
+                        telegram
                     </p>
                 </div>
             </div>
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a target="_blank" rel="noopener noreferrer" aria-label="Website"
-                        style="background-color: rgb(114, 92, 171);" href="https://iamdanre.github.io">
-                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24"
-                                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round">
+                    <a target="_blank" rel="noopener noreferrer" aria-label="Website" style="background-color: rgb(114, 92, 171);" href="https://iamdanre.github.io">
+                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path>
                                 <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path>
                             </svg></div>
                     </a>
                     <p class="textColor">
-                        Website
+                        website
                     </p>
                 </div>
             </div>
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a href="https://github.com/iamdanre" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-                        style="background-color: rgb(114, 92, 171);">
-                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-brand-github" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                    <a href="https://github.com/iamdanre" target="_blank" rel="noopener noreferrer" aria-label="GitHub" style="background-color: rgb(114, 92, 171);">
+                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path
                                     d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5">
@@ -271,18 +239,14 @@
                             </svg></div>
                     </a>
                     <p class="textColor">
-                        Github
+                        github
                     </p>
                 </div>
             </div>
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a href="https://instagram.com/_danre_" target="_blank" rel="noopener noreferrer"
-                        aria-label="Instagram" style="background-color: rgb(114, 92, 171);">
-                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                    <a href="https://instagram.com/_danre_" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="background-color: rgb(114, 92, 171);">
+                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <rect x="4" y="4" width="16" height="16" rx="4"></rect>
                                 <circle cx="12" cy="12" r="3"></circle>
@@ -291,18 +255,15 @@
                         </div>
                     </a>
                     <p class="textColor">
-                        Instagram
+                        instagram
                     </p>
                 </div>
             </div>
 
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
-                        style="background-color: rgb(114, 92, 171);" href="https://wa.me/qr/4TGYO3UHF45SI1">
-                        <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                xml:space="preserve"
-                                style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5">
+                    <a target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style="background-color: rgb(114, 92, 171);" href="https://wa.me/qr/4TGYO3UHF45SI1">
+                        <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5">
                                 <path style="fill:none" d="M0 0h24v24H0z"></path>
                                 <path
                                     d="M5.43 4.93A9.969 9.969 0 0 1 12.5 2c5.519 0 10 4.481 10 10 0 2.76-1.12 5.26-2.93 7.07l.001.001-.003.001A9.97 9.97 0 0 1 12.5 22a9.835 9.835 0 0 1-5.005-1.354l-4.187.546.546-4.187A9.835 9.835 0 0 1 2.5 12a9.97 9.97 0 0 1 2.928-7.068l.001-.003.001.001ZM16.5 16c-4.415 0-8-3.585-8-8"
@@ -310,19 +271,15 @@
                             </svg></div>
                     </a>
                     <p class="textColor">
-                        WhatsApp
+                        whatsapp
                     </p>
                 </div>
             </div>
 
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a href="https://twitter.com/xp_x_qx" target="_blank" rel="noopener noreferrer" aria-label="Twitter"
-                        style="background-color: rgb(114, 92, 171);">
-                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                    <a href="https://twitter.com/xp_x_qx" target="_blank" rel="noopener noreferrer" aria-label="Twitter" style="background-color: rgb(114, 92, 171);">
+                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <path
                                     d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z">
@@ -330,20 +287,15 @@
                             </svg></div>
                     </a>
                     <p class="textColor">
-                        Twitter
+                        twitter
                     </p>
                 </div>
             </div>
 
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a href="https://open.spotify.com/user/ob7mvyi83kza9lw510kipb786?si=Z31DBcGBRyWuYXXsWrIQeg"
-                        target="_blank" rel="noopener noreferrer" aria-label="Spotify"
-                        style="background-color: rgb(114, 92, 171);">
-                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-brand-spotify" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
+                    <a href="https://open.spotify.com/user/ob7mvyi83kza9lw510kipb786?si=Z31DBcGBRyWuYXXsWrIQeg" target="_blank" rel="noopener noreferrer" aria-label="Spotify" style="background-color: rgb(114, 92, 171);">
+                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-spotify" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                 <circle cx="12" cy="12" r="9"></circle>
                                 <path d="M8 11.973c2.5 -1.473 5.5 -.973 7.5 .527"></path>
@@ -352,7 +304,7 @@
                             </svg></div>
                     </a>
                     <p class="textColor">
-                        Spotify
+                        spotify
                     </p>
                 </div>
             </div>
@@ -394,7 +346,7 @@
         }), navigator.canShare ? s.addEventListener("click", () => {
             navigator.share({
                 title: document.title,
-                text: "You can view my Digital Business Card here:",
+                text: "you can view my digital business card here:",
                 url: window.location.href
             })
         }) : s.addEventListener("click", () => {
@@ -403,7 +355,7 @@
             tC(m), qrv.style.display = "block", dN(cv), ki && dN(ki)
         }), sk && sk.addEventListener("click", () => {
             tC(m), ki && (ki.style.display = "flex"), dN(cv), dN(qrv)
-        }), c.addEventListener("click", () => tC(m)), curl.addEventListener("click", async () => {
+        }), c.addEventListener("click", () => tC(m)), curl.addEventListener("click", async() => {
             let e = curl.querySelectorAll(".iconColor")[1];
             await navigator.clipboard.writeText(window.location.href).then(t => {
                 e.innerText = "Copied", setTimeout(() => {
