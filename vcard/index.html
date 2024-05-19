@@ -30,7 +30,9 @@
         </a>
         <div id="copyView">
             <p class="textColor">
-                copy and send the URL to share my contact card
+                this device does not support sharing, click <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API" target="_blank"
+                    rel="noopener noreferrer">here</a> to learn more.
             </p> <button id="copyURL" style="background-color: rgb(114, 92, 171);" aria-label="Copy URL"
                 aria-labelledby="copyURL" title="Copy URL">
                 <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +49,7 @@
         <div id="qrView" class="textColor">
             <div id="qr"></div>
             <h3>scan the QR code</h3>
-            <p>to view my contact card on another device</p>
+            <p>to view this contact card on another device</p>
         </div>
     </div>
     <header>
@@ -96,15 +98,13 @@
         <img class="animate__animated animate__pulse animate__infinite" id="profilePhoto" fetchpriority="high"
             src="./d.webp" alt="Memoji" />
         <div id="info" class="textColor">
-            <p class="name">
-                danré
-            </p>
+            <p class="name">danré</p>
         </div>
         <a id="cta" rel="noopener noreferrer" download="booboo.vcf" aria-label="Save Contact"
-            style="background-color: rgb(114, 92, 171);" href="vcard.vcf">
+            style="background-color:rgb(114, 92, 171);" href="vcard.vcf">
             <div class="icon iconColor">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
-                    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
+                    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2; filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.7));">
                     <path style="fill:none" d="M0 0h24v24H0z"></path>
                     <circle cx="8.5" cy="7" r="4" style="fill:none;stroke:#fff;stroke-width:2.29px"
                         transform="matrix(.875 0 0 .875 4.563 -.625)"></circle>
@@ -114,23 +114,20 @@
                         transform="translate(-92 -152)"></path>
                 </svg>
             </div>
-            <p class="iconColor">save to contacts</p>
+            <p class="iconColor" style="text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);">save to contacts</p>
         </a>
         <div class="actions">
             <div class="actionsC">
                 <div class="actionBtn">
                     <a href="tel:+27784585144" target="_blank" rel="noopener noreferrer" aria-label="Mobile"
-                        style="background-color: rgb(114, 92, 171);">
-                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-phone-call" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        style="background-color: rgb(92, 171, 121);">
+                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path
-                                    d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2">
-                                </path>
-                                <path d="M15 7a2 2 0 0 1 2 2"></path>
-                                <path d="M15 3a6 6 0 0 1 6 6"></path>
+                                    d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
                             </svg></div>
 
                     </a>
@@ -142,7 +139,7 @@
             <div class="actionsC">
                 <div class="actionBtn">
                     <a href="https://t.me/xp_x_qx" target="_blank" rel="noopener noreferrer" aria-label="Telegram"
-                        style="background-color: rgb(114, 92, 171);">
+                        style="background-color: rgb(38, 102, 198);">
                         <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-brand-telegram" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -159,7 +156,7 @@
             <div class="actionsC">
                 <div class="actionBtn">
                     <a href="mailto:dev.danre@icloud.com" target="_blank" rel="noopener noreferrer" aria-label="Email"
-                        style="background-color: rgb(114, 92, 171);">
+                        style="background-color: rgb(171, 81, 151);">
                         <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24"
                                 stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -177,7 +174,7 @@
             <div class="actionsC">
                 <div class="actionBtn">
                     <a href="https://github.com/iamdanre" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-                        style="background-color: rgb(114, 92, 171);">
+                        style="background-color: rgb(59, 58, 63);">
                         <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-brand-github" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -196,15 +193,16 @@
             <div class="actionsC">
                 <div class="actionBtn">
                     <a target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
-                        style="background-color: rgb(114, 92, 171);"
+                        style="background-color: rgb(94, 197, 80);"
                         href="https://api.whatsapp.com/send?phone=27784585144">
-                        <div class="icon iconColor"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                xml:space="preserve"
-                                style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5">
-                                <path style="fill:none" d="M0 0h24v24H0z"></path>
+                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-brand-whatsapp">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
                                 <path
-                                    d="M5.43 4.93A9.969 9.969 0 0 1 12.5 2c5.519 0 10 4.481 10 10 0 2.76-1.12 5.26-2.93 7.07l.001.001-.003.001A9.97 9.97 0 0 1 12.5 22a9.835 9.835 0 0 1-5.005-1.354l-4.187.546.546-4.187A9.835 9.835 0 0 1 2.5 12a9.97 9.97 0 0 1 2.928-7.068l.001-.003.001.001ZM16.5 16c-4.415 0-8-3.585-8-8"
-                                    style="fill:none;stroke:#fff;stroke-width:2px"></path>
+                                    d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
                             </svg></div>
                     </a>
                     <p class="textColor">
@@ -214,26 +212,30 @@
             </div>
             <div class="actionsC">
                 <div class="actionBtn">
-                    <a target="_blank" rel="noopener noreferrer" aria-label="Website"
+                    <a target="_blank" rel="noopener noreferrer" aria-label="Portfolio"
                         style="background-color: rgb(114, 92, 171);" href="https://iamdanre.github.io">
-                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24"
-                                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path>
-                                <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path>
+                        <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-presentation">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 4l18 0" />
+                                <path d="M4 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-10" />
+                                <path d="M12 16l0 4" />
+                                <path d="M9 20l6 0" />
+                                <path d="M8 12l3 -3l2 2l3 -3" />
                             </svg></div>
                     </a>
                     <p class="textColor">
-                        website
+                        portfolio
                     </p>
                 </div>
             </div>
             <div class="actionsC">
                 <div class="actionBtn">
                     <a href="https://instagram.com/_danre_" target="_blank" rel="noopener noreferrer"
-                        aria-label="Instagram" style="background-color: rgb(114, 92, 171);">
+                        aria-label="Instagram"
+                        style="background: linear-gradient(to right, rgb(222, 187, 62), rgb(213, 42, 114), rgb(100, 41, 218));">
                         <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg"
                                 class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -253,7 +255,7 @@
             <div class="actionsC">
                 <div class="actionBtn">
                     <a href="https://x.com/xp_x_qx" target="_blank" rel="noopener noreferrer" aria-label="x"
-                        style="background-color: rgb(114, 92, 171);">
+                        style="background-color: rgb(47, 46, 49);">
                         <div class="icon iconColor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round"
@@ -273,16 +275,13 @@
                 <div class="actionBtn">
                     <a href="https://open.spotify.com/user/ob7mvyi83kza9lw510kipb786?si=Z31DBcGBRyWuYXXsWrIQeg"
                         target="_blank" rel="noopener noreferrer" aria-label="Spotify"
-                        style="background-color: rgb(114, 92, 171);">
-                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg"
-                                class="icon icon-tabler icon-tabler-brand-spotify" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <circle cx="12" cy="12" r="9"></circle>
-                                <path d="M8 11.973c2.5 -1.473 5.5 -.973 7.5 .527"></path>
-                                <path d="M9 15c1.5 -1 4 -1 5 .5"></path>
-                                <path d="M7 9c2 -1 6 -2 10 .5"></path>
+                        style="background-color: rgb(58, 162, 67);">
+                        <div class="icon  iconColor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="currentColor"
+                                class="icon icon-tabler icons-tabler-filled icon-tabler-brand-spotify">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336m-2.168 11.605c-1.285 -1.927 -4.354 -2.132 -6.387 -.777a1 1 0 0 0 1.11 1.664c1.195 -.797 3.014 -.675 3.613 .223a1 1 0 1 0 1.664 -1.11m1.268 -3.245c-2.469 -1.852 -5.895 -2.187 -8.608 -.589a1 1 0 0 0 1.016 1.724c1.986 -1.171 4.544 -.92 6.392 .465a1 1 0 0 0 1.2 -1.6m1.43 -3.048c-3.677 -2.298 -7.766 -2.152 -10.977 -.546a1 1 0 0 0 .894 1.788c2.635 -1.317 5.997 -1.437 9.023 .454a1 1 0 1 0 1.06 -1.696" />
                             </svg></div>
                     </a>
                     <p class="textColor">
@@ -301,14 +300,12 @@
         document.addEventListener("DOMContentLoaded", () => {
             const modal = document.getElementById("modal");
             const closeBtn = document.getElementById("close");
-            const keyView = document.getElementById("keyView");
             const copyView = document.getElementById("copyView");
             const copyURLBtn = document.getElementById("copyURL");
             const qrView = document.getElementById("qrView");
             const qr = document.getElementById("qr");
             const shareBtn = document.getElementById("share");
             const showQRBtn = document.getElementById("showQR");
-            const showKeyBtn = document.getElementById("showKey");
 
             function toggleVisibility(element) {
                 if (element.style.top === "2rem") {
@@ -359,7 +356,6 @@
                     toggleVisibility(modal);
                     copyView.style.display = "flex";
                     hideElement(qrView);
-                    if (keyView) hideElement(keyView);
                 });
             }
 
@@ -367,17 +363,7 @@
                 toggleVisibility(modal);
                 qrView.style.display = "block";
                 hideElement(copyView);
-                if (keyView) hideElement(keyView);
             });
-
-            if (showKeyBtn) {
-                showKeyBtn.addEventListener("click", () => {
-                    toggleVisibility(modal);
-                    if (keyView) keyView.style.display = "flex";
-                    hideElement(copyView);
-                    hideElement(qrView);
-                });
-            }
 
             closeBtn.addEventListener("click", () => toggleVisibility(modal));
 
@@ -388,50 +374,50 @@
                     iconText.innerText = "copied";
                     setTimeout(() => {
                         iconText.innerText = "copy URL";
-                    }, 1000);
+                    }, 1200);
                 } catch (error) {
-                    console.error("Copy to clipboard failed", error);
+                    console.error("Copy to clipboard failed:", error);
+                    iconText.innerText = "could not copy";
                 }
             });
 
             // begin easter egg
-            let touchTimer;
-            
+            let lastTap = 0;
+
             function triggerConfetti(event) {
                 event.preventDefault();
                 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                    confetti({
+                    // profilePhoto.style.opacity = 0;
+                    // profilePhoto.style.transition = "opacity 0.2s ease-in-out";
+                    return confetti({
                         particleCount: 100,
                         startVelocity: 30,
                         spread: 360,
                         origin: {
                             x: Math.random(),
                             y: Math.random() - 0.2
+                            // x: event.clientX / window.innerWidth,
+                            // y: event.clientY / window.innerHeight
                         }
-                    });
+                    })
+                        .then(() => {
+                            // profilePhoto.style.display = "block";
+                        })
                 }
             }
 
-            function handleTouchStart(event) {
-                event.preventDefault();
-                touchTimer = setTimeout(() => {
+            function handleDoubleTap(event) {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+                if (tapLength < 300 && tapLength > 0) {
                     triggerConfetti(event);
-                }, 600);
-            }
-
-            function handleTouchEnd(event) {
-                clearTimeout(touchTimer);
-            }
-
-            function handleTouchCancel(event) {
-                clearTimeout(touchTimer);
+                }
+                lastTap = currentTime;
             }
 
             const profilePhoto = document.getElementById("profilePhoto");
             profilePhoto.addEventListener("contextmenu", triggerConfetti); // desktop right-click
-            profilePhoto.addEventListener("touchstart", handleTouchStart); // mobile long touch
-            profilePhoto.addEventListener("touchend", handleTouchEnd);
-            profilePhoto.addEventListener("touchcancel", handleTouchCancel);
+            profilePhoto.addEventListener("touchstart", handleDoubleTap); // mobile double tap
             // end easter egg
 
         });

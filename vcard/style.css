@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 body {
+    font: 1rem/1.5 'Inter', sans-serif;
     margin: 0 auto;
     width: 100%;
     padding: 0;
@@ -269,21 +270,15 @@ main {
     line-height: 1.5
 }
 
-.sub {
-    font-size: .9rem;
-    margin: .5rem 0 0;
-    opacity: .8
-}
-
-.textC {
+/* .textC {
     margin: 1rem
-}
+} */
 
 #cta {
     display: flex;
     align-items: center;
     border-radius: 5rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     padding: 1rem 1.5rem;
     cursor: pointer;
     line-height: 0;
@@ -302,7 +297,7 @@ main {
 
 .actions {
     width: 100%;
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center
