@@ -395,9 +395,11 @@
             });
 
             // begin easter egg
+            let touchTimer;
+            
             function triggerConfetti(event) {
+                event.preventDefault();
                 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                    event.preventDefault();
                     confetti({
                         particleCount: 100,
                         startVelocity: 30,
@@ -409,7 +411,27 @@
                     });
                 }
             }
-            document.getElementById("profilePhoto").addEventListener("contextmenu", triggerConfetti);
+
+            function handleTouchStart(event) {
+                event.preventDefault();
+                touchTimer = setTimeout(() => {
+                    triggerConfetti(event);
+                }, 600);
+            }
+
+            function handleTouchEnd(event) {
+                clearTimeout(touchTimer);
+            }
+
+            function handleTouchCancel(event) {
+                clearTimeout(touchTimer);
+            }
+
+            const profilePhoto = document.getElementById("profilePhoto");
+            profilePhoto.addEventListener("contextmenu", triggerConfetti); // desktop right-click
+            profilePhoto.addEventListener("touchstart", handleTouchStart); // mobile long touch
+            profilePhoto.addEventListener("touchend", handleTouchEnd);
+            profilePhoto.addEventListener("touchcancel", handleTouchCancel);
             // end easter egg
 
         });
