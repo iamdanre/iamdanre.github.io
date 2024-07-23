@@ -223,6 +223,7 @@ main {
 }
 
 #profilePhoto {
+    scale: 0.9;
     width: 10rem;
     height: 10rem;
     border-radius: 100%;
