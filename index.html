@@ -114,12 +114,17 @@
       <h2>ArtiFact</h2>
       <div id="videos">
         <video autoplay loop muted playsinline>
+          <!-- HEVC video for safari -->
+          <source src="img/artifact/mac.mov" type="video/mp4;codecs=hvc1" />
+          <!-- WebM video for chrome -->
           <source src="img/artifact/mac.webm" type="video/webm" />
         </video>
         <video autoplay loop muted playsinline>
+          <source src="img/artifact/iPad.mov " type="video/mp4;codecs=hvc1" />
           <source src="img/artifact/iPad.webm" type="video/webm" />
         </video>
         <video autoplay loop muted playsinline>
+          <source src="img/artifact/iPhone.mov" type="video/mp4;codecs=hvc1" />
           <source src="img/artifact/iPhone.webm" type="video/webm" />
         </video>
       </div>
