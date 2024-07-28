@@ -1,6 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap'); */
 body {
-    font-family: "Inter", sans-serif;
+    font-family: system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     padding: 0px;
     margin: 0px;
     max-width: 100vw;
@@ -66,7 +68,7 @@ header table {
 }
 
 #navigation {
-    width: 80%;
+    width: 100%;
 }
 
 #magnify {
@@ -95,8 +97,8 @@ header table {
 }
 
 #img_here {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     background-size: contain !important;
     background-repeat: no-repeat !important;
     margin: 0px auto;
@@ -178,7 +180,6 @@ header table {
 
 .btn_one {
     font-size: 18px;
-    font-family: "Poppins", sans-serif;
     color: #fff;
     background: #339fc8;
     border: 0px solid #c83a69;
@@ -199,10 +200,11 @@ header table {
 
 #rightImage {
     width: 100%;
-    height: 95vh;
+    height: 100vh;
     background: url("img/mem.webp") center center;
     background-size: auto;
     background-repeat: no-repeat;
+    min-width: 100%;
 }
 
 #work {
@@ -218,7 +220,7 @@ header table {
 }
 
 #skills {
-    width: 92vw;
+    width: 100vw;
     padding: 6vh 4vw;
     font-weight: bold;
 }
@@ -303,7 +305,6 @@ header table {
     border: 0px;
     border-bottom: 3px solid #735dad;
     padding: 8px 10px;
-    font-family: "Inter", sans-serif;
     font-size: 18px;
     transition: 0.4s ease-in-out;
     color: #fff;
@@ -317,7 +318,6 @@ header table {
     border: 0px;
     border-bottom: 3px solid #735dad;
     padding: 8px 10px;
-    font-family: "Poppins", sans-serif;
     font-size: 18px;
     background: transparent;
     resize: none;
@@ -380,7 +380,7 @@ button:focus {
     background: #735dad;
 }
 
-@media (max-width: 620px) {
+@media (max-width: 890px) {
     #photos {
         columns: 1;
         column-gap: 0%;
@@ -488,17 +488,28 @@ button:focus {
     align-self: flex-start;
 }
 
-.videoWrapper {
-    overflow: hidden;
-    padding-bottom: 56.25%;
-    position: relative;
-    height: 0;
+#videos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-.videoWrapper iframe {
-    left: 0;
-    top: 0;
-    height: 100%;
+#videos video {
+    flex: 1 1 calc(33.33% - 10px);
+    max-width: calc(33.33% - 10px);
     width: 100%;
-    position: absolute;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    #videos {
+        flex-direction: column;
+    }
+
+    #videos video {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }

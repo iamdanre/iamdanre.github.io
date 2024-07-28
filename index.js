@@ -48,7 +48,7 @@ function magnify(imglink) {
     $("#magnify").addClass("animated fadeIn");
     setTimeout(function () {
         $("#magnify").removeClass("animated fadeIn");
-    }, 800);
+    }, 200);
 }
 
 function closemagnify() {
@@ -57,18 +57,23 @@ function closemagnify() {
         $("#magnify").css("display", "none");
         $("#magnify").removeClass("animated fadeOut");
         $("#img_here").css("background", `url('') center center`);
-    }, 800);
+    }, 200);
 }
 
-setTimeout(function () {
-    $("#loading").addClass("animated fadeOut");
-    setTimeout(function () {
-        $("#loading").removeClass("animated fadeOut");
-        $("#loading").css("display", "none");
-    }, 800);
-}, 1650);
+// setTimeout(function () {
+//     $("#loading").addClass("animated fadeOut");
+//     setTimeout(function () {
+//         $("#loading").removeClass("animated fadeOut");
+//         $("#loading").css("display", "none");
+//     }, 50);
+// }, 100);
 
 $(document).ready(function () {
+    const tds = document.querySelectorAll(".stagger_data_anim td");
+    tds.forEach((td, index) => {
+        td.style.animationDelay = `${0.2 * (index + 1)}s`;
+    });
+
     $("a").on("click", function (event) {
         if (this.hash !== "") {
             event.preventDefault();
@@ -84,4 +89,26 @@ $(document).ready(function () {
             );
         }
     });
-}); 
+});
+
+const artifactVideo = document.getElementById("artifactVideo");
+const player = new Plyr(artifactVideo, {
+    title: 'Artifact Demo',
+    controls: ["play-large"],
+    muted: true,
+    clickToPlay: true,
+    hideControls: true,
+    autoplay: true,
+    loop: { active: true },
+});
+
+const securitreeVideo = document.getElementById("securitreeVideo");
+const player1 = new Plyr(secVideo, {
+    title: 'Securitree Demo',
+    controls: ["play-large"],
+    muted: true,
+    clickToPlay: true,
+    hideControls: true,
+    autoplay: true,
+    loop: { active: true },
+});
