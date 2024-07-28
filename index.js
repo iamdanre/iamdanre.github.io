@@ -36,7 +36,7 @@ window.onscroll = function () {
 $("#whyMe").click(function () {
     $("html, body").animate(
         {
-            scrollTop: $("#skills").offset().top-45,
+            scrollTop: $("#skills").offset().top - 45,
         },
         1000
     );
@@ -93,7 +93,7 @@ $(document).ready(function () {
 
 const artifactVideo = document.getElementById("artifactVideo");
 const player = new Plyr(artifactVideo, {
-    title: 'Artifact Demo',
+    title: "Artifact Demo",
     controls: ["play-large"],
     muted: true,
     clickToPlay: true,
@@ -104,7 +104,7 @@ const player = new Plyr(artifactVideo, {
 
 const securitreeVideo = document.getElementById("securitreeVideo");
 const player1 = new Plyr(secVideo, {
-    title: 'Securitree Demo',
+    title: "Securitree Demo",
     controls: ["play-large"],
     muted: true,
     clickToPlay: true,
