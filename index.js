@@ -79,4 +79,23 @@ document.addEventListener('DOMContentLoaded', function () {
     clickToPlay: true,
     hideControls: true
   })
+
+  changeFavicon()
 })
+
+let imageCounter = 0
+const favicons = ['favicon.ico', 'img/favicons/favicon_2.ico', 'img/favicons/favicon_3.ico', 'img/favicons/favicon_4.ico']
+function changeFavicon () {
+  const currentIcon = document.querySelector("link[rel='icon']")
+  if (currentIcon !== null) {
+    currentIcon.remove()
+  }
+  document.querySelector('head').insertAdjacentHTML('beforeend', '<link rel="icon" href="' + favicons[imageCounter] + '" type="image/gif">')
+  if (imageCounter === favicons.length - 1) {
+    imageCounter = 0
+  } else {
+    imageCounter++
+  }
+  const delay = imageCounter % 2 === 0 ? 1000 : 500
+  setTimeout(changeFavicon, delay)
+}
