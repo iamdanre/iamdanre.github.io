@@ -1,33 +1,33 @@
-const jQuery = document.scripts.namedItem('jquery').ownerDocument.defaultView.jQuery
-const Plyr = document.scripts.namedItem('plyr').ownerDocument.defaultView.Plyr
+import jQuery from 'https://cdn.jsdelivr.net/npm/jquery@3.7.1/+esm';
+import Plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/+esm';
 
-const width = jQuery(window).width()
+const width = jQuery(window).width();
 globalThis.onscroll = () => {
   if (width >= 1000) {
     if (document.body.scrollTop > 80 ||
       document.documentElement.scrollTop > 80) {
-      jQuery('#header').css('background', '#252422')
-      jQuery('#header').css('box-shadow', '0px 0px 20px #000')
-      jQuery('#header').css('padding', '4vh 4vw')
+        jQuery('#header').css('background', '#252422');
+        jQuery('#header').css('box-shadow', '0px 0px 20px #000');
+        jQuery('#header').css('padding', '4vh 4vw');
       jQuery('#navigation a').hover(
         function () {
-          jQuery(this).css('border-bottom', '2px solid rgb(255, 44, 90)')
-        },
-        function () {
-          jQuery(this).css('border-bottom', '2px solid transparent')
+            jQuery(this).css('border-bottom', '2px solid rgb(255, 44, 90)');
+          },
+          function () {
+            jQuery(this).css('border-bottom', '2px solid transparent');
         }
       )
     } else {
-      jQuery('#header').css('background', 'transparent')
-      jQuery('#header').css('color', '#fff')
-      jQuery('#header').css('box-shadow', '0px 0px 0px #252422')
-      jQuery('#header').css('padding', '6vh 4vw')
+        jQuery('#header').css('background', 'transparent');
+        jQuery('#header').css('color', '#fff');
+        jQuery('#header').css('box-shadow', '0px 0px 0px #252422');
+        jQuery('#header').css('padding', '6vh 4vw');
       jQuery('#navigation a').hover(
         function () {
-          jQuery(this).css('border-bottom', '2px solid #fff')
-        },
-        function () {
-          jQuery(this).css('border-bottom', '2px solid transparent')
+            jQuery(this).css('border-bottom', '2px solid #fff');
+          },
+          function () {
+            jQuery(this).css('border-bottom', '2px solid transparent');
         }
       )
     }
