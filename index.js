@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 
-/*
+  /*
   new Plyr('#artifactVideo', {
     title: 'Artifact Demo',
     controls: ['play-large'],
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clickToPlay: true,
     hideControls: true
   }).on('ready', function () {
-    console.log('Securitree ready')
+    console.log('plyr ready')
   })
 
   changeFavicon()
