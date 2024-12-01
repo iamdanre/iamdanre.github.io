@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 let imageCounter = 0
-const favicons = ['favicon.ico', 'img/favicons/favicon_2.ico', 'img/favicons/favicon_3.ico', 'img/favicons/favicon_4.ico']
+const favicons = ['img/favicons/favicon_1.ico', 'img/favicons/favicon_2.ico', 'img/favicons/favicon_3.ico', 'img/favicons/favicon_4.ico']
 function changeFavicon () {
   const currentIcon = document.querySelector("link[rel='icon']")
   if (currentIcon !== null) {
