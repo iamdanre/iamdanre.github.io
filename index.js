@@ -2,7 +2,7 @@ const jQuery = document.scripts.namedItem('jquery').ownerDocument.defaultView.jQ
 const Plyr = document.scripts.namedItem('plyr').ownerDocument.defaultView.Plyr
 
 const width = jQuery(window).width()
-window.onscroll = () => {
+globalThis.onscroll = () => {
   if (width >= 1000) {
     if (document.body.scrollTop > 80 ||
       document.documentElement.scrollTop > 80) {
@@ -60,12 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         1800,
         function () {
-          window.location.hash = hash
+          globalThis.location.hash = hash
         }
       )
     }
   })
 
+/*
   new Plyr('#artifactVideo', {
     title: 'Artifact Demo',
     controls: ['play-large'],
@@ -87,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //   }, { threshold: 0.5 })
     //   observer.observe(player.elements.container)
   })
+*/
 
   new Plyr('#secVideo', {
     title: 'Securitree Demo',
