@@ -1,60 +1,62 @@
-const width = $(window).width()
-window.onscroll = function () {
+const jQuery = document.scripts.namedItem('jquery').ownerDocument.defaultView.jQuery
+const Plyr = document.scripts.namedItem('plyr').ownerDocument.defaultView.Plyr
+
+const width = jQuery(window).width()
+window.onscroll = () => {
   if (width >= 1000) {
-    if (
-      document.body.scrollTop > 80 ||
-document.documentElement.scrollTop > 80
-    ) {
-      $('#header').css('background', '#252422')
-      $('#header').css('box-shadow', '0px 0px 20px #000')
-      $('#header').css('padding', '4vh 4vw')
-      $('#navigation a').hover(
+    if (document.body.scrollTop > 80 ||
+      document.documentElement.scrollTop > 80) {
+      jQuery('#header').css('background', '#252422')
+      jQuery('#header').css('box-shadow', '0px 0px 20px #000')
+      jQuery('#header').css('padding', '4vh 4vw')
+      jQuery('#navigation a').hover(
         function () {
-          $(this).css('border-bottom', '2px solid rgb(255, 44, 90)')
+          jQuery(this).css('border-bottom', '2px solid rgb(255, 44, 90)')
         },
         function () {
-          $(this).css('border-bottom', '2px solid transparent')
+          jQuery(this).css('border-bottom', '2px solid transparent')
         }
       )
     } else {
-      $('#header').css('background', 'transparent')
-      $('#header').css('color', '#fff')
-      $('#header').css('box-shadow', '0px 0px 0px #252422')
-      $('#header').css('padding', '6vh 4vw')
-      $('#navigation a').hover(
+      jQuery('#header').css('background', 'transparent')
+      jQuery('#header').css('color', '#fff')
+      jQuery('#header').css('box-shadow', '0px 0px 0px #252422')
+      jQuery('#header').css('padding', '6vh 4vw')
+      jQuery('#navigation a').hover(
         function () {
-          $(this).css('border-bottom', '2px solid #fff')
+          jQuery(this).css('border-bottom', '2px solid #fff')
         },
         function () {
-          $(this).css('border-bottom', '2px solid transparent')
+          jQuery(this).css('border-bottom', '2px solid transparent')
         }
       )
     }
   }
 }
 
-$('#whyMe').click(function () {
-  $('html, body').animate(
+jQuery('#whyMe').click(() => {
+  jQuery('html, body').animate(
     {
-      scrollTop: $('#skills').offset().top - 45
+      scrollTop: jQuery('#skills').offset().top - 45
     },
     1000
   )
 })
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
+  // const Plyr = require('plyr')
   const tds = document.querySelectorAll('.stagger_data_anim td')
   tds.forEach((td, index) => {
     td.style.animationDelay = `${0.2 * (index + 1)}s`
   })
 
-  $('a').on('click', function (event) {
+  jQuery('a').on('click', function (event) {
     if (this.hash !== '') {
       event.preventDefault()
       const hash = this.hash
-      $('body,html').animate(
+      jQuery('body,html').animate(
         {
-          scrollTop: $(hash).offset().top
+          scrollTop: jQuery(hash).offset().top
         },
         1800,
         function () {
@@ -69,7 +71,21 @@ document.addEventListener('DOMContentLoaded', function () {
     controls: ['play-large'],
     muted: true,
     clickToPlay: true,
-    hideControls: true
+    hideControls: false
+  }).on('ready', () => {
+    console.log('Artifact ready')
+    // const observer = new window.IntersectionObserver((entries) => {
+    //     entries.forEach(entry => {
+    //       if (entry.isIntersecting) {
+    //         player.play()
+    //         player.elements.container.querySelector('.plyr__control').style.display = 'none'
+    //       } else {
+    //         player.pause()
+    //         player.elements.container.querySelector('.plyr__control').style.display = 'block'
+    //       }
+    //     })
+    //   }, { threshold: 0.5 })
+    //   observer.observe(player.elements.container)
   })
 
   new Plyr('#secVideo', {
@@ -78,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function () {
     muted: true,
     clickToPlay: true,
     hideControls: true
+  }).on('ready', function () {
+    console.log('Securitree ready')
   })
 
   changeFavicon()
