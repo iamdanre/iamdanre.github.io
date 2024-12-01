@@ -1,0 +1,7 @@
+{
+  "tasks": {
+    "build": "deno cache main.ts",
+    "test": "deno test",
+    "launch": "deno run --allow-net --allow-read main.ts"
+  }
+}

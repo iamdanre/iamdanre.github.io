@@ -13,5 +13,9 @@
 	"compilerOptions": {
 		"jsx": "react-jsx",
 		"jsxImportSource": "preact"
+	},
+	"gh-pages": {
+		"branch": "gh-pages",
+		"remote": "origin"
 	}
 }

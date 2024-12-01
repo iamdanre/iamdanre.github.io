@@ -1,12 +1,14 @@
 import { h } from "preact";
-import { PageProps } from "$fresh/server.ts";
+import { tw } from "@twind";
 
-export default function NotFoundPage(props: PageProps) {
+export default function NotFoundPage() {
   return (
-    <div>
-      <h1>404 - Page Not Found</h1>
-      <p>Sorry, the page you are looking for does not exist.</p>
-      <a href="/">Go back to the home page</a>
+    <div class={tw`flex flex-col items-center justify-center h-screen`}>
+      <h1 class={tw`text-4xl font-bold mb-4`}>404 - Page Not Found</h1>
+      <p class={tw`mb-4`}>Sorry, the page you are looking for does not exist.</p>
+      <a href="/" class={tw`text-blue-500 hover:underline`}>
+        Go back to the home page
+      </a>
     </div>
   );
 }
