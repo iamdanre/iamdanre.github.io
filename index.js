@@ -44,7 +44,6 @@ jQuery('#whyMe').click(() => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-  // const Plyr = require('plyr')
   const tds = document.querySelectorAll('.stagger_data_anim td')
   tds.forEach((td, index) => {
     td.style.animationDelay = `${0.2 * (index + 1)}s`
