@@ -7,6 +7,24 @@
     }
 }
 
+:root {
+    --animate-duration: 1s;
+    --animate-delay: 1s;
+    --animate-repeat: 1;
+    --bg-color: rgb(13, 17, 23);
+    --text-color: #fff;
+}
+
+[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+}
+
+html {
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease;
+}
+
 body {
     /* font: 1rem/1.5 'Inter', sans-serif; */
     font-family: system-ui, sans-serif;
@@ -16,8 +34,10 @@ body {
     width: 100%;
     padding: 0;
     max-width: 30rem;
-    color: #fff;
-    position: relative
+    color: var(--text-color);
+    position: relative;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 main {
@@ -90,7 +110,10 @@ h3 {
 
 .icon {
     width: 1.5rem;
-    height: 1.5rem
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 a {
@@ -109,7 +132,8 @@ a {
     width: 100%;
     bottom: 0;
     transition: top .2s ease-out, opacity .1s ease-out;
-    transform: translateZ(0)
+    transform: translateZ(0);
+    background-color: var(--bg-color);
 }
 
 #close {
@@ -233,7 +257,7 @@ main {
 }
 
 #profilePhoto {
-    scale: 0.9;
+    scale: 0.8;
     width: 10rem;
     height: 10rem;
     border-radius: 100%;
@@ -309,34 +333,36 @@ main {
 .actions {
     width: 100%;
     margin-top: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0 1rem;
 }
 
-.actionsC {
-    width: 33.33%
-}
-
-/* i want  */
-
-.actionBtn {
-    padding: .5rem;
+.action-button {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center
-}
-
-.actionBtn a {
-    border-radius: 100%;
+    justify-content: center;
+    gap: 0.5rem;
     padding: 1rem;
-    line-height: 0
+    border-radius: 0.25rem;
+    transition: transform 0.2s ease;
+    color: white;
 }
 
-.actionBtn p {
-    margin: .5rem 0 0;
-    font-size: .9rem
+.action-button:hover {
+    transform: translateY(-2px);
+}
+
+.action-button .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-button span {
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .secBtn {
@@ -518,7 +544,7 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 .textColor {
-    color: #fff !important;
+    color: var(--text-color) !important;
 }
 
 .seekbarColor {
@@ -535,7 +561,14 @@ input[type='range']::-webkit-slider-thumb {
 :root {
     --animate-duration: 1s;
     --animate-delay: 1s;
-    --animate-repeat: 1
+    --animate-repeat: 1;
+    --bg-color: rgb(13, 17, 23);
+    --text-color: #fff;
+}
+
+[data-theme="light"] {
+    --bg-color: #ffffff;
+    --text-color: #000000;
 }
 
 .animate__animated {
@@ -691,4 +724,19 @@ print {
     animation-name: pulse;
     -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out
+}
+
+@media (min-width: 640px) {
+    .actions {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+#themeToggle {
+    cursor: pointer;
+}
+
+#moonIcon,
+#sunIcon {
+    color: var(--text-color);
 }
