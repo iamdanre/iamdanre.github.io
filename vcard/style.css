@@ -740,3 +740,11 @@ print {
 #sunIcon {
     color: var(--text-color);
 }
+
+.topAction {
+    color: var(--text-color);
+}
+
+.closeColor {
+    color: var(--text-color);
+}
