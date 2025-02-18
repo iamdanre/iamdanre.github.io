@@ -6,7 +6,7 @@
   padding: 2rem;
   font-weight: normal;
 }
-
+/* 
 a,
 .green {
   text-decoration: none;
@@ -14,10 +14,25 @@ a,
   transition: 0.4s;
   padding: 3px;
 }
+*/
+a {
+  text-decoration: none;
+  color: var(--c-malibu);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+.mainTitle {
+  color: var(--c-main);
+  text-decoration: none;
+  transition: 0.4s;
+  padding: 3px;
+}
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: var(--c-wisteria-soft);
+    /* background-color: hsla(160, 100%, 37%, 0.2); */
   }
 }
 

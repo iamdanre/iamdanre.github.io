@@ -34,6 +34,12 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  --c-main: hsla(256, 34%, 64%, 1);
+  --c-malibu: #55c0e4;
+  --c-bostonBlue: #3b819b;
+
+  --c-wisteria-soft: hsl(290, 50%, 76%, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {
