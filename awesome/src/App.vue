@@ -5,7 +5,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/mem.webp" width="125" height="125" />
+    <img alt="logo" class="logo" src="@/assets/mem.webp" width="125" height="125" />
 
     <div class="wrapper">
       <!-- <HelloWorld msg="You did it!" /> -->
