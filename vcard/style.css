@@ -282,7 +282,7 @@ main {
     scale: 0.8;
     width: 10rem;
     height: 10rem;
-    border-radius: 100%;
+    /* border-radius: 100%; */
     box-sizing: content-box;
     -webkit-user-select: none;
     -moz-user-select: none;
