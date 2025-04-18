@@ -1,10 +1,12 @@
+import './confetti.min.js'
+
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('modal')
     const closeBtn = document.getElementById('close')
     const copyView = document.getElementById('copyView')
     const copyURLBtn = document.getElementById('copyURL')
     const qrView = document.getElementById('qrView')
-    const qr = document.getElementById('qr')
+    // const qr = document.getElementById('qr')
     const shareBtn = document.getElementById('share')
     const showQRBtn = document.getElementById('showQR')
 
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         element.style.display = 'none'
     }
 
-    window.addEventListener('load', () => {
+    /*window.addEventListener('load', () => {
         if (window.QRCode) {
             qr.innerHTML = new QRCode({
                 content: window.location.href,
@@ -37,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 padding: 0,
             }).svg()
         }
-    })
+    })*/
 
     if (navigator.canShare) {
         shareBtn.addEventListener('click', async () => {

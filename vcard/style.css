@@ -144,20 +144,18 @@ a {
 }
 
 #copyView,
-#keyView,
-#qrView {
+#keyView {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0 1rem;
-    text-align: center
+    text-align: center;
 }
 
 #copyView p,
-#keyView p,
-#qrView p {
+#keyView p {
     margin: 2rem;
-    text-align: center
+    text-align: center;
 }
 
 #copyURL,
@@ -171,27 +169,35 @@ a {
     border: none;
     outline: 0;
     cursor: pointer;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 #copyURL span,
 #dlKey span {
-    margin-left: .5rem
+    margin-left: .5rem;
 }
 
-#qrView h3 {
-    margin: 2rem 2rem 0
-}
-
-#qrView p {
-    margin: .5rem 2rem 0
+#qrView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1rem;
+    text-align: center;
 }
 
 #qr {
-    margin: 2rem;
-    padding: 2rem;
-    background: #fff;
-    border-radius: .5rem
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.qrCode {
+    max-width: 200px;
+    width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 header {

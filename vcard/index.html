@@ -51,7 +51,9 @@
                 </button>
             </div>
             <div id="qrView" class="textColor" style="display: none">
-                <div id="qr"></div>
+                <div id="qr">
+                    <img class="qrCode" fetchpriority="high" id="qrCode" src="../img/qr.webp" alt="QR Code" />
+                </div>
                 <h3>scan the QR code</h3>
                 <p>to view this contact card on another device</p>
             </div>
@@ -322,8 +324,6 @@
             </div>
         </main>
 
-        <script src="./qrcode.min.js" defer></script>
-        <script src="./confetti.min.js" defer></script>
-        <script src="./index.js" defer></script>
+        <script src="./index.js" type="module"></script>
     </body>
 </html>
