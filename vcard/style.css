@@ -116,12 +116,23 @@ h3 {
     justify-content: center;
 }
 
-a {
+a,
+button {
     text-decoration: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
 }
 
 #modal {
@@ -139,7 +150,6 @@ a {
 #close {
     align-self: end;
     padding: 1rem;
-    cursor: pointer;
     line-height: 0;
 }
 
@@ -156,6 +166,16 @@ a {
 #keyView p {
     margin: 2rem;
     text-align: center;
+}
+
+#copyView p a {
+    /* ensure link color contrasts */
+    color: #725cab;
+    text-decoration: underline;
+}
+
+[data-theme='light'] #copyView p a {
+    color: #5c4888;
 }
 
 #copyURL,
@@ -240,6 +260,7 @@ header {
 
 #topActions {
     display: flex !important;
+    /* important needed to override inline style? check if inline style can be removed */
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
@@ -253,7 +274,7 @@ header {
     gap: 0.5rem;
 }
 
-#topActions a {
+#topActions button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -265,7 +286,8 @@ header {
 #topActions .icon {
     width: 24px;
     height: 24px;
-    display: flex !important;
+    display: flex;
+    /* removed !important */
     align-items: center;
     justify-content: center;
 }
@@ -274,6 +296,19 @@ header {
     width: 24px;
     height: 24px;
     display: block;
+}
+
+/* Responsive stack top actions on small screens */
+@media screen and (max-width: 480px) {
+    #topActions {
+        flex-direction: column !important;
+        align-items: flex-end;
+    }
+
+    #topActions button {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
 }
 
 main {
@@ -285,7 +320,7 @@ main {
 }
 
 #profilePhoto {
-    scale: 0.8;
+    transform: scale(0.8);
     width: 10rem;
     height: 10rem;
     /* border-radius: 100%; */
@@ -586,18 +621,7 @@ input[type='range']::-webkit-slider-thumb {
  *
  * Copyright (c) 2020 Animate.css
  */
-:root {
-    --animate-duration: 1s;
-    --animate-delay: 1s;
-    --animate-repeat: 1;
-    --bg-color: rgb(13, 17, 23);
-    --text-color: #fff;
-}
-
-[data-theme='light'] {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-}
+/* removed duplicated theme vars */
 
 .animate__animated {
     -webkit-animation-duration: 1s;
@@ -757,6 +781,12 @@ print {
 @media (min-width: 640px) {
     .actions {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 389px) {
+    .actions {
+        grid-template-columns: 1fr;
     }
 }
 
