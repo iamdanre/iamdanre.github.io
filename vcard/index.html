@@ -6,9 +6,29 @@
         <meta name="robots" content="index" />
         <meta name="url" content="https://iamdanre.github.io/vcard/" />
         <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
-        <meta name="description" content="danré contact and social links" />
+        <meta name="description" content="connect with danré through various social platforms and professional channels." />
+        <meta name="keywords" content="danré, developer, software engineer, portfolio, contact" />
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://iamdanre.github.io/vcard/" />
         <meta property="og:title" content="danré" />
+        <meta property="og:description" content="connect with danré through various social platforms and professional channels." />
+        <meta property="og:image" content="./d2.webp" />
+        
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://iamdanre.github.io/vcard/" />
         <meta property="twitter:title" content="danré ಠ_ಠ" />
+        <meta property="twitter:description" content="connect with danré through various social platforms and professional channels." />
+        <meta property="twitter:image" content="./d2.webp" />
+        
+        <!-- Preload critical resources -->
+        <link rel="preload" href="./style.css" as="style" />
+        <link rel="preload" href="./waving.webp" as="image" />
+        <link rel="preconnect" href="https://github.com" />
+        <link rel="preconnect" href="https://t.me" />
+        
         <script>
             'http' == window.location.href.substr(0, 4) && '/' != window.location.href.slice(-1) && window.location.replace(window.location.href + '/')
         </script>
@@ -18,7 +38,7 @@
 
     <body id="body">
         <div id="modal" style="visibility: hidden; top: 2rem; opacity: 0">
-            <a id="close" class="closeColor">
+            <button type="button" id="close" class="closeColor">
                 <div class="icon">
                     <svg
                         viewBox="0 0 24 24"
@@ -29,13 +49,13 @@
                         <path d="M18 6 6 18M6 6l12 12" style="fill: none; fill-rule: nonzero; stroke: var(--text-color); stroke-width: 2px"></path>
                     </svg>
                 </div>
-            </a>
+            </button>
             <div id="copyView">
                 <p class="textColor">
                     this device does not support sharing, click <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API" target="_blank" rel="noopener noreferrer">here</a> to learn
                     more.
                 </p>
-                <button id="copyURL" style="background-color: rgb(114, 92, 171)" aria-label="Copy URL" aria-labelledby="copyURL" title="Copy URL">
+                <button type="button" id="copyURL" style="background-color: rgb(114, 92, 171)" title="Copy URL">
                     <div class="icon iconColor">
                         <svg
                             viewBox="0 0 24 24"
@@ -61,7 +81,7 @@
         <header>
             <div id="topActions" style="display: flex">
                 <div>
-                    <a id="share">
+                    <button type="button" id="share">
                         <div class="icon topAction">
                             <svg
                                 viewBox="0 0 24 24"
@@ -82,8 +102,8 @@
                                 </g>
                             </svg>
                         </div>
-                    </a>
-                    <a id="showQR">
+                    </button>
+                    <button type="button" id="showQR">
                         <div class="icon topAction">
                             <svg
                                 viewBox="0 0 24 24"
@@ -98,8 +118,8 @@
                                 <path style="fill: currentColor" d="M15 15h2v2h-2z"></path>
                             </svg>
                         </div>
-                    </a>
-                    <a id="themeToggle">
+                    </button>
+                    <button type="button" id="themeToggle">
                         <div class="icon topAction">
                             <svg
                                 id="moonIcon"
@@ -138,7 +158,7 @@
                                 <path d="m19.07 4.93-1.41 1.41"></path>
                             </svg>
                         </div>
-                    </a>
+                    </button>
                 </div>
             </div>
         </header>
@@ -324,6 +344,6 @@
             </div>
         </main>
 
-        <script src="./index.js" type="module"></script>
+        <script src="./index.mjs" type="module"></script>
     </body>
 </html>

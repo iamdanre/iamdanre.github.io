@@ -15,7 +15,7 @@
     --text-color: #fff;
 }
 
-[data-theme="light"] {
+[data-theme='light'] {
     --bg-color: #ffffff;
     --text-color: #000000;
 }
@@ -100,12 +100,12 @@ main {
 
 p {
     line-height: 1.5;
-    margin: 0
+    margin: 0;
 }
 
 h2,
 h3 {
-    margin: 0
+    margin: 0;
 }
 
 .icon {
@@ -116,12 +116,23 @@ h3 {
     justify-content: center;
 }
 
-a {
+a,
+button {
     text-decoration: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none
+    user-select: none;
+}
+
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
 }
 
 #modal {
@@ -131,7 +142,7 @@ a {
     z-index: 1;
     width: 100%;
     bottom: 0;
-    transition: top .2s ease-out, opacity .1s ease-out;
+    transition: top 0.2s ease-out, opacity 0.1s ease-out;
     transform: translateZ(0);
     background-color: var(--bg-color);
 }
@@ -139,8 +150,7 @@ a {
 #close {
     align-self: end;
     padding: 1rem;
-    cursor: pointer;
-    line-height: 0
+    line-height: 0;
 }
 
 #copyView,
@@ -156,6 +166,16 @@ a {
 #keyView p {
     margin: 2rem;
     text-align: center;
+}
+
+#copyView p a {
+    /* ensure link color contrasts */
+    color: #725cab;
+    text-decoration: underline;
+}
+
+[data-theme='light'] #copyView p a {
+    color: #5c4888;
 }
 
 #copyURL,
@@ -174,7 +194,7 @@ a {
 
 #copyURL span,
 #dlKey span {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
 }
 
 #qrView {
@@ -203,7 +223,7 @@ a {
 header {
     display: flex;
     justify-content: flex-start;
-    flex-direction: column
+    flex-direction: column;
 }
 
 .headerImgC {
@@ -211,7 +231,7 @@ header {
     grid-template-columns: auto;
     grid-template-rows: auto;
     height: 100%;
-    overflow: hidden
+    overflow: hidden;
 }
 
 #cover {
@@ -222,7 +242,7 @@ header {
     -o-object-position: top center;
     object-position: top center;
     -o-object-fit: cover;
-    object-fit: cover
+    object-fit: cover;
 }
 
 #logo {
@@ -235,11 +255,12 @@ header {
     grid-column: 1;
     grid-row: 1;
     align-self: center;
-    justify-self: center
+    justify-self: center;
 }
 
 #topActions {
     display: flex !important;
+    /* important needed to override inline style? check if inline style can be removed */
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
@@ -253,7 +274,7 @@ header {
     gap: 0.5rem;
 }
 
-#topActions a {
+#topActions button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -265,7 +286,8 @@ header {
 #topActions .icon {
     width: 24px;
     height: 24px;
-    display: flex !important;
+    display: flex;
+    /* removed !important */
     align-items: center;
     justify-content: center;
 }
@@ -276,16 +298,29 @@ header {
     display: block;
 }
 
+/* Responsive stack top actions on small screens */
+@media screen and (max-width: 480px) {
+    #topActions {
+        flex-direction: column !important;
+        align-items: flex-end;
+    }
+
+    #topActions button {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+}
+
 main {
     padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center
+    text-align: center;
 }
 
 #profilePhoto {
-    scale: 0.8;
+    transform: scale(0.8);
     width: 10rem;
     height: 10rem;
     /* border-radius: 100%; */
@@ -294,6 +329,11 @@ main {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    transition: transform 0.3s ease;
+}
+
+#profilePhoto:hover {
+    transform: scale(0.85);
 }
 
 #info {
@@ -303,34 +343,38 @@ main {
     align-items: center;
     margin-top: 1rem;
     line-height: 1.25;
-    word-break: break-word
+    word-break: break-word;
 }
 
 .name {
     font-weight: 720;
     font-size: 1.7rem;
-    margin: 0
+    margin: 0;
 }
 
 .pronouns {
     display: block;
-    font-size: .9rem;
-    opacity: .8;
+    font-size: 0.9rem;
+    opacity: 0.8;
     font-weight: 400;
-    margin: 0 0 .5rem
+    margin: 0 0 0.5rem;
 }
 
 .bizname {
-    font-size: .9rem;
-    margin: .5rem 0 0;
-    opacity: .8
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+    opacity: 0.7;
+    max-width: 80%;
+    margin: 0.5rem auto;
 }
 
 .sub,
 .textC {
     font-size: 1rem;
     white-space: pre-line;
-    line-height: 1.5
+    line-height: 1.5;
+    opacity: 0.9;
+    margin: 0.5rem 0;
 }
 
 /* .textC {
@@ -347,15 +391,15 @@ main {
     line-height: 0;
     width: 100%;
     justify-content: center;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 #cta .icon {
-    margin-right: .5rem
+    margin-right: 0.5rem;
 }
 
 #cta p {
-    margin: 0
+    margin: 0;
 }
 
 .actions {
@@ -374,12 +418,35 @@ main {
     gap: 0.5rem;
     padding: 1rem;
     border-radius: 0.25rem;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     color: white;
+    position: relative;
+    overflow: hidden;
 }
 
 .action-button:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.action-button:active {
+    transform: translateY(0);
+}
+
+.action-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.action-button:hover::after {
+    opacity: 1;
 }
 
 .action-button .icon {
@@ -394,7 +461,7 @@ main {
 }
 
 .secBtn {
-    padding: 1rem
+    padding: 1rem;
 }
 
 .featured {
@@ -402,20 +469,20 @@ main {
     flex-direction: column;
     justify-content: center;
     margin: 2rem 0 0;
-    width: 100%
+    width: 100%;
 }
 
 .section {
     font-weight: 700;
     text-align: center;
     font-size: 1.3rem;
-    padding: 1rem 0
+    padding: 1rem 0;
 }
 
 .media {
     overflow: hidden;
     border-radius: 1rem;
-    margin-top: 1rem
+    margin-top: 1rem;
 }
 
 .media img {
@@ -425,12 +492,12 @@ main {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: 100%
+    width: 100%;
 }
 
 .embedded {
     position: relative;
-    padding-top: 56.25%
+    padding-top: 56.25%;
 }
 
 .embedded iframe {
@@ -438,31 +505,31 @@ main {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%
+    height: 100%;
 }
 
 .music,
 .video {
-    width: 100%
+    width: 100%;
 }
 
 .mediaC {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: center
+    align-items: center;
 }
 
 video {
-    width: 100%
+    width: 100%;
 }
 
 .controls {
     padding: 1rem;
-    font-size: .9rem;
+    font-size: 0.9rem;
     text-align: center;
     width: 100%;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 .docDl,
@@ -470,75 +537,75 @@ video {
     display: none;
     flex-direction: column;
     align-items: center;
-    width: 100%
+    width: 100%;
 }
 
 .docDl {
-    display: flex
+    display: flex;
 }
 
 .seekBar {
     width: 100%;
-    height: .5rem;
-    margin: 1.5rem 0 .5rem;
+    height: 0.5rem;
+    margin: 1.5rem 0 0.5rem;
     border-radius: 5rem;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .dlBtn,
 .playPause {
-    margin: 1rem 0 .5rem;
+    margin: 1rem 0 0.5rem;
     padding: 1rem;
     border-radius: 5rem;
     line-height: 0;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .pause {
-    display: none
+    display: none;
 }
 
 .title {
     font-size: 1rem;
     font-weight: 700;
-    margin: 0
+    margin: 0;
 }
 
 .prodInfo .sub {
-    margin: -1rem 0 0
+    margin: -1rem 0 0;
 }
 
 .price {
     margin: 1rem 0 0;
     font-size: 1rem;
-    font-weight: 700
+    font-weight: 700;
 }
 
 .label {
     display: inline-block;
     font-size: 1rem;
-    margin: 1rem 0 .5rem;
+    margin: 1rem 0 0.5rem;
     border-radius: 5rem;
     letter-spacing: 1px;
-    padding: 1rem 1.5rem
+    padding: 1rem 1.5rem;
 }
 
 .label p {
-    margin: 0
+    margin: 0;
 }
 
 footer {
     padding: 4rem 1rem 2rem;
-    font-size: .9rem;
-    text-align: center
+    font-size: 0.9rem;
+    text-align: center;
 }
 
 footer a {
     text-decoration: underline;
-    color: inherit
+    color: inherit;
 }
 
 input[type='range']::-moz-range-track {
@@ -576,7 +643,7 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 .seekbarColor {
-    background: #725cab80 !important
+    background: #725cab80 !important;
 }
 
 /*
@@ -586,18 +653,7 @@ input[type='range']::-webkit-slider-thumb {
  *
  * Copyright (c) 2020 Animate.css
  */
-:root {
-    --animate-duration: 1s;
-    --animate-delay: 1s;
-    --animate-repeat: 1;
-    --bg-color: rgb(13, 17, 23);
-    --text-color: #fff;
-}
-
-[data-theme="light"] {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-}
+/* removed duplicated theme vars */
 
 .animate__animated {
     -webkit-animation-duration: 1s;
@@ -605,99 +661,99 @@ input[type='range']::-webkit-slider-thumb {
     -webkit-animation-duration: var(--animate-duration);
     animation-duration: var(--animate-duration);
     -webkit-animation-fill-mode: both;
-    animation-fill-mode: both
+    animation-fill-mode: both;
 }
 
 .animate__animated.animate__infinite {
     -webkit-animation-iteration-count: infinite;
-    animation-iteration-count: infinite
+    animation-iteration-count: infinite;
 }
 
 .animate__animated.animate__repeat-1 {
     -webkit-animation-iteration-count: 1;
     animation-iteration-count: 1;
     -webkit-animation-iteration-count: var(--animate-repeat);
-    animation-iteration-count: var(--animate-repeat)
+    animation-iteration-count: var(--animate-repeat);
 }
 
 .animate__animated.animate__repeat-2 {
     -webkit-animation-iteration-count: 2;
     animation-iteration-count: 2;
-    -webkit-animation-iteration-count: calc(var(--animate-repeat)*2);
-    animation-iteration-count: calc(var(--animate-repeat)*2)
+    -webkit-animation-iteration-count: calc(var(--animate-repeat) * 2);
+    animation-iteration-count: calc(var(--animate-repeat) * 2);
 }
 
 .animate__animated.animate__repeat-3 {
     -webkit-animation-iteration-count: 3;
     animation-iteration-count: 3;
-    -webkit-animation-iteration-count: calc(var(--animate-repeat)*3);
-    animation-iteration-count: calc(var(--animate-repeat)*3)
+    -webkit-animation-iteration-count: calc(var(--animate-repeat) * 3);
+    animation-iteration-count: calc(var(--animate-repeat) * 3);
 }
 
 .animate__animated.animate__delay-1s {
     -webkit-animation-delay: 1s;
     animation-delay: 1s;
     -webkit-animation-delay: var(--animate-delay);
-    animation-delay: var(--animate-delay)
+    animation-delay: var(--animate-delay);
 }
 
 .animate__animated.animate__delay-2s {
     -webkit-animation-delay: 2s;
     animation-delay: 2s;
-    -webkit-animation-delay: calc(var(--animate-delay)*2);
-    animation-delay: calc(var(--animate-delay)*2)
+    -webkit-animation-delay: calc(var(--animate-delay) * 2);
+    animation-delay: calc(var(--animate-delay) * 2);
 }
 
 .animate__animated.animate__delay-3s {
     -webkit-animation-delay: 3s;
     animation-delay: 3s;
-    -webkit-animation-delay: calc(var(--animate-delay)*3);
-    animation-delay: calc(var(--animate-delay)*3)
+    -webkit-animation-delay: calc(var(--animate-delay) * 3);
+    animation-delay: calc(var(--animate-delay) * 3);
 }
 
 .animate__animated.animate__delay-4s {
     -webkit-animation-delay: 4s;
     animation-delay: 4s;
-    -webkit-animation-delay: calc(var(--animate-delay)*4);
-    animation-delay: calc(var(--animate-delay)*4)
+    -webkit-animation-delay: calc(var(--animate-delay) * 4);
+    animation-delay: calc(var(--animate-delay) * 4);
 }
 
 .animate__animated.animate__delay-5s {
     -webkit-animation-delay: 5s;
     animation-delay: 5s;
-    -webkit-animation-delay: calc(var(--animate-delay)*5);
-    animation-delay: calc(var(--animate-delay)*5)
+    -webkit-animation-delay: calc(var(--animate-delay) * 5);
+    animation-delay: calc(var(--animate-delay) * 5);
 }
 
 .animate__animated.animate__faster {
-    -webkit-animation-duration: .5s;
-    animation-duration: .5s;
-    -webkit-animation-duration: calc(var(--animate-duration)/2);
-    animation-duration: calc(var(--animate-duration)/2)
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-duration: calc(var(--animate-duration) / 2);
+    animation-duration: calc(var(--animate-duration) / 2);
 }
 
 .animate__animated.animate__fast {
-    -webkit-animation-duration: .8s;
-    animation-duration: .8s;
-    -webkit-animation-duration: calc(var(--animate-duration)*0.8);
-    animation-duration: calc(var(--animate-duration)*0.8)
+    -webkit-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+    -webkit-animation-duration: calc(var(--animate-duration) * 0.8);
+    animation-duration: calc(var(--animate-duration) * 0.8);
 }
 
 .animate__animated.animate__slow {
     -webkit-animation-duration: 2s;
     animation-duration: 2s;
-    -webkit-animation-duration: calc(var(--animate-duration)*2);
-    animation-duration: calc(var(--animate-duration)*2)
+    -webkit-animation-duration: calc(var(--animate-duration) * 2);
+    animation-duration: calc(var(--animate-duration) * 2);
 }
 
 .animate__animated.animate__slower {
     -webkit-animation-duration: 3s;
     animation-duration: 3s;
-    -webkit-animation-duration: calc(var(--animate-duration)*3);
-    animation-duration: calc(var(--animate-duration)*3)
+    -webkit-animation-duration: calc(var(--animate-duration) * 3);
+    animation-duration: calc(var(--animate-duration) * 3);
 }
 
-@media (prefers-reduced-motion:reduce),
+@media (prefers-reduced-motion: reduce),
 print {
     .animate__animated {
         -webkit-animation-duration: 1ms !important;
@@ -705,45 +761,45 @@ print {
         -webkit-transition-duration: 1ms !important;
         transition-duration: 1ms !important;
         -webkit-animation-iteration-count: 1 !important;
-        animation-iteration-count: 1 !important
+        animation-iteration-count: 1 !important;
     }
 
-    .animate__animated[class*=Out] {
-        opacity: 0
+    .animate__animated[class*='Out'] {
+        opacity: 0;
     }
 }
 
 @-webkit-keyframes pulse {
     0% {
         -webkit-transform: scaleX(1);
-        transform: scaleX(1)
+        transform: scaleX(1);
     }
 
     50% {
         -webkit-transform: scale3d(1.05, 1.05, 1.05);
-        transform: scale3d(1.05, 1.05, 1.05)
+        transform: scale3d(1.05, 1.05, 1.05);
     }
 
     to {
         -webkit-transform: scaleX(1);
-        transform: scaleX(1)
+        transform: scaleX(1);
     }
 }
 
 @keyframes pulse {
     0% {
         -webkit-transform: scaleX(1);
-        transform: scaleX(1)
+        transform: scaleX(1);
     }
 
     50% {
         -webkit-transform: scale3d(1.05, 1.05, 1.05);
-        transform: scale3d(1.05, 1.05, 1.05)
+        transform: scale3d(1.05, 1.05, 1.05);
     }
 
     to {
         -webkit-transform: scaleX(1);
-        transform: scaleX(1)
+        transform: scaleX(1);
     }
 }
 
@@ -751,12 +807,18 @@ print {
     -webkit-animation-name: pulse;
     animation-name: pulse;
     -webkit-animation-timing-function: ease-in-out;
-    animation-timing-function: ease-in-out
+    animation-timing-function: ease-in-out;
 }
 
 @media (min-width: 640px) {
     .actions {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 389px) {
+    .actions {
+        grid-template-columns: 1fr;
     }
 }
 

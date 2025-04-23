@@ -29,6 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
         element.style.display = 'none'
     }
 
+    const showElementFlex = (element) => {
+        element.style.display = 'flex'
+    }
+
+    const showElementBlock = (element) => {
+        element.style.display = 'block'
+    }
+
+
     /*window.addEventListener('load', () => {
         if (window.QRCode) {
             qr.innerHTML = new QRCode({
@@ -58,30 +67,35 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         shareBtn.addEventListener('click', () => {
             toggleVisibility(modal)
-            copyView.style.display = 'flex'
+            showElementFlex(copyView)
             hideElement(qrView)
         })
     }
 
     showQRBtn.addEventListener('click', () => {
         toggleVisibility(modal)
-        qrView.style.display = 'block'
+        showElementBlock(qrView)
         hideElement(copyView)
     })
 
     closeBtn.addEventListener('click', () => toggleVisibility(modal))
 
     copyURLBtn.addEventListener('click', async () => {
-        const iconText = copyURLBtn.querySelectorAll('.iconColor')[1]
+        const iconText = copyURLBtn.querySelector('span.iconColor')
+        if (!iconText) return;
+        const originalText = iconText.innerText;
         try {
             await navigator.clipboard.writeText(window.location.href)
             iconText.innerText = 'copied'
             setTimeout(() => {
-                iconText.innerText = 'copy URL'
+                iconText.innerText = originalText
             }, 1200)
         } catch (error) {
             console.error('Copy to clipboard failed:', error)
             iconText.innerText = 'could not copy'
+             setTimeout(() => {
+                iconText.innerText = originalText
+            }, 1500)
         }
     })
     // end qr modal
@@ -91,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const triggerConfetti = (event) => {
         event.preventDefault()
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (window.confetti && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             confetti({
                 particleCount: 100,
                 startVelocity: 30,
@@ -105,17 +119,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const handleDoubleTap = (event) => {
-        const currentTime = new Date().getTime()
+        const currentTime = Date.now
         const tapLength = currentTime - lastTap
         if (tapLength < 300 && tapLength > 0) {
             triggerConfetti(event)
+            lastTap = 0
+        } else {
+           lastTap = currentTime
         }
-        lastTap = currentTime
     }
 
     const profilePhoto = document.getElementById('profilePhoto')
-    profilePhoto.addEventListener('contextmenu', triggerConfetti)
-    profilePhoto.addEventListener('touchstart', handleDoubleTap)
+    if (profilePhoto) {
+        profilePhoto.addEventListener('contextmenu', triggerConfetti)
+        profilePhoto.addEventListener('touchstart', handleDoubleTap)
+    }
     // end easter egg
 
     // begin theme toggle
@@ -128,17 +146,24 @@ document.addEventListener('DOMContentLoaded', () => {
         html.setAttribute('data-theme', theme)
         localStorage.setItem('theme', theme)
 
-        moonIcon.style.display = theme === 'light' ? 'block' : 'none'
-        sunIcon.style.display = theme === 'light' ? 'none' : 'block'
+        if (moonIcon && sunIcon) {
+            moonIcon.style.display = theme === 'light' ? 'block' : 'none'
+            sunIcon.style.display = theme === 'light' ? 'none' : 'block'
+        }
     }
 
-    const savedTheme = localStorage.getItem('theme') || 'dark'
-    setTheme(savedTheme)
+    const savedTheme = localStorage.getItem('theme')
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    setTheme(initialTheme)
 
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = html.getAttribute('data-theme')
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light'
-        setTheme(newTheme)
-    })
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme')
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+            setTheme(newTheme)
+        })
+    }
     // end theme toggle
 })
