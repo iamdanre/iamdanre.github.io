@@ -334,21 +334,69 @@ button {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: transparent;
-  border: none;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   color: var(--text-color);
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.2s;
+  padding: 0.75rem;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px var(--shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
 }
 
 #close:hover {
-  background: var(--glass-bg);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px var(--shadow-medium);
+  background: var(--glass-border);
+}
+
+[data-theme="dark"] #close:hover {
+  box-shadow: 0 6px 20px var(--shadow-medium), 0 0 10px var(--theme-purple-1);
+  border-color: var(--theme-purple-1);
+}
+
+[data-theme="light"] #close:hover {
+  box-shadow: 0 6px 20px var(--shadow-medium), 0 0 10px var(--theme-blue-3);
+  border-color: var(--theme-blue-3);
+}
+
+#close:active {
+  transform: scale(0.9);
+}
+
+#close:focus-visible {
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] #close:focus-visible {
+  outline: 2px solid var(--theme-purple-1);
+}
+
+[data-theme="light"] #close:focus-visible {
+  outline: 2px solid var(--theme-blue-3);
 }
 
 #close .icon svg path {
   stroke: var(--text-color) !important;
+}
+
+#close .icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#close .icon svg {
+  width: 20px;
+  height: 20px;
 }
 
 @media (max-width: 480px) {

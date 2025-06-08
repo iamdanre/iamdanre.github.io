@@ -73,18 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
             element.classList.contains('hide');
 
         if (isHidden) {
-            console.log('Opening modal');
             element.style.visibility = 'visible';
             element.classList.remove('hide');
             element.classList.add('show');
-        } else {
-            console.log('Closing modal');
-            element.classList.remove('show');
-            element.classList.add('hide');
-            setTimeout(() => {
-                element.style.visibility = 'hidden';
-            }, 400);
+            return;
         }
+        element.classList.remove('show');
+        element.classList.add('hide');
+        setTimeout(() => {
+            element.style.visibility = 'hidden';
+        }, 400);
     }
 
     const modalContent = modal.querySelector('.modal-content');
@@ -105,12 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
             currentY = e.touches[0].clientY;
             const deltaY = currentY - startY;
 
-            if (deltaY > 0) {
-                modalContent.style.transform = `translateX(-50%) translateY(calc(-50% + ${deltaY}px))`;
-
-                const opacity = Math.max(1 - (deltaY / 300), 0.3);
-                modal.style.opacity = opacity.toString();
+            if (deltaY <= 0) {
+                return;
             }
+            modalContent.style.transform = `translateX(-50%) translateY(calc(-50% + ${deltaY}px))`;
+
+            const opacity = Math.max(1 - (deltaY / 300), 0.3);
+            modal.style.opacity = opacity.toString();
         }, { passive: true });
 
         modalContent.addEventListener('touchend', () => {
@@ -133,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalBackground = modal.querySelector('.modal-background');
     if (modalBackground) {
         modalBackground.addEventListener('click', () => {
-            console.log('Background clicked - closing modal');
             toggleVisibility(modal);
         });
     }
@@ -167,20 +165,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
         }
-    } else {
-        if (shareBtn) {
-            shareBtn.addEventListener('click', () => {
-                console.log('Share button clicked - opening modal');
-                toggleVisibility(modal)
-                showElementFlex(copyView)
-                hideElement(qrView)
-            })
-        }
+    } else if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+            toggleVisibility(modal)
+            showElementFlex(copyView)
+            hideElement(qrView)
+        })
     }
 
     if (showQRBtn) {
         showQRBtn.addEventListener('click', () => {
-            console.log('QR button clicked - opening modal');
+            // console.log('QR button clicked - opening modal');
             toggleVisibility(modal)
             showElementBlock(qrView)
             hideElement(copyView)
@@ -191,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (closeBtn) {
         closeBtn.addEventListener('click', () => {
-            console.log('Close button clicked');
             toggleVisibility(modal)
         })
     }
