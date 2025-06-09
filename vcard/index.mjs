@@ -128,11 +128,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (deltaY <= 0) {
                 return
             }
+            e.preventDefault()
 
             modalContent.style.transform = `translateX(-50%) translateY(${Math.min(deltaY, window.innerHeight)}px)`
             const opacity = Math.max(1 - (deltaY / 400), 0.2)
             modal.style.opacity = opacity.toString()
-        }, { passive: true })
+        }, { passive: false })
 
         modalContent.addEventListener('touchend', () => {
             if (!isDragging) return
