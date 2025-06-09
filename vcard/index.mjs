@@ -16,6 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentY = 0
     let isDragging = false
 
+    // Prevent pull-to-refresh when modal is open
+    const preventPullToRefresh = (e) => {
+        if (modal.classList.contains('show')) {
+            e.preventDefault()
+        }
+    }
+
     function initializeAnimations() {
         if (prefersReducedMotion) {
             const allElements = document.querySelectorAll('#topActions button, #profilePhoto, #info, .action-button')
@@ -72,10 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
             element.style.visibility = 'visible'
             element.classList.remove('hide')
             element.classList.add('show')
+            // Prevent pull-to-refresh when modal opens
+            document.body.addEventListener('touchstart', preventPullToRefresh, { passive: false })
+            document.body.addEventListener('touchmove', preventPullToRefresh, { passive: false })
             return
         }
         element.classList.remove('show')
         element.classList.add('hide')
+        // Re-enable pull-to-refresh when modal closes
+        document.body.removeEventListener('touchstart', preventPullToRefresh)
+        document.body.removeEventListener('touchmove', preventPullToRefresh)
         setTimeout(() => {
             element.style.visibility = 'hidden'
             const modalContent = element.querySelector('.modal-content')
@@ -97,6 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.classList.add('hide')
         modalContent.style.transform = 'translateX(-50%) translateY(100%)'
         modal.style.opacity = '0'
+        // Re-enable pull-to-refresh when modal is dismissed
+        document.body.removeEventListener('touchstart', preventPullToRefresh)
+        document.body.removeEventListener('touchmove', preventPullToRefresh)
         setTimeout(() => {
             modal.style.visibility = 'hidden'
             modal.classList.remove('hide')
@@ -126,6 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const deltaY = currentY - startY
 
             if (deltaY <= 0) {
+                // Always prevent default for upward swipes to prevent pull-to-refresh
+                e.preventDefault()
                 return
             }
             e.preventDefault()
