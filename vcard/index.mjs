@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeAnimations()
 
     const modal = document.getElementById('modal')
-    const closeBtn = document.getElementById('close')
     const copyView = document.getElementById('copyView')
     const copyURLBtn = document.getElementById('copyURL')
     const qrView = document.getElementById('qrView')
@@ -63,79 +62,158 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const toggleVisibility = (element) => {
         if (!element) {
-            console.error('Modal element not found');
-            return;
+            console.error('Modal element not found')
+            return
         }
 
-        const isHidden = element.style.visibility === 'hidden' ||
-            element.style.opacity === '0' ||
-            !element.classList.contains('show') ||
-            element.classList.contains('hide');
+        const isHidden = !element.classList.contains('show')
 
         if (isHidden) {
-            element.style.visibility = 'visible';
-            element.classList.remove('hide');
-            element.classList.add('show');
-            return;
+            element.style.visibility = 'visible'
+            element.classList.remove('hide')
+            element.classList.add('show')
+            return
         }
-        element.classList.remove('show');
-        element.classList.add('hide');
+        element.classList.remove('show')
+        element.classList.add('hide')
         setTimeout(() => {
-            element.style.visibility = 'hidden';
-        }, 400);
+            element.style.visibility = 'hidden'
+            const modalContent = element.querySelector('.modal-content')
+            element.style.opacity = ''
+            if (modalContent) {
+                modalContent.style.transform = ''
+                modalContent.style.transition = ''
+            }
+        }, 400)
     }
 
-    const modalContent = modal.querySelector('.modal-content');
+    const modalContent = modal.querySelector('.modal-content')
+
+    function dismissSwipedModal() {
+        if (navigator.vibrate) {
+            navigator.vibrate(50)
+        }
+        modal.classList.remove('show')
+        modal.classList.add('hide')
+        modalContent.style.transform = 'translateX(-50%) translateY(100%)'
+        modal.style.opacity = '0'
+        setTimeout(() => {
+            modal.style.visibility = 'hidden'
+            modal.classList.remove('hide')
+            // Reset for next time
+            modal.style.opacity = ''
+            modal.style.transition = ''
+            modalContent.style.transform = ''
+            modalContent.style.transition = ''
+        }, 400)
+    }
 
     if (modalContent) {
         modalContent.addEventListener('touchstart', (e) => {
-            if (prefersReducedMotion) return;
+            if (prefersReducedMotion) return
 
-            startY = e.touches[0].clientY;
-            currentY = startY;
-            isDragging = true;
-            modalContent.style.transition = 'none';
-        }, { passive: true });
+            startY = e.touches[0].clientY
+            currentY = startY
+            isDragging = true
+            modalContent.style.transition = 'none'
+            modal.style.transition = 'none'
+        }, { passive: true })
 
         modalContent.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
+            if (!isDragging) return
 
-            currentY = e.touches[0].clientY;
-            const deltaY = currentY - startY;
+            currentY = e.touches[0].clientY
+            const deltaY = currentY - startY
 
             if (deltaY <= 0) {
-                return;
+                return
             }
-            modalContent.style.transform = `translateX(-50%) translateY(calc(-50% + ${deltaY}px))`;
 
-            const opacity = Math.max(1 - (deltaY / 300), 0.3);
-            modal.style.opacity = opacity.toString();
-        }, { passive: true });
+            modalContent.style.transform = `translateX(-50%) translateY(${Math.min(deltaY, window.innerHeight)}px)`
+            const opacity = Math.max(1 - (deltaY / 400), 0.2)
+            modal.style.opacity = opacity.toString()
+        }, { passive: true })
 
         modalContent.addEventListener('touchend', () => {
-            if (!isDragging) return;
+            if (!isDragging) return
 
-            isDragging = false;
-            modalContent.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            modal.style.transition = 'opacity 0.3s ease';
+            isDragging = false
+            modalContent.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+            modal.style.transition = 'opacity 0.3s ease'
 
-            const deltaY = currentY - startY;
-            if (deltaY > 100) {
-                toggleVisibility(modal);
+            const deltaY = currentY - startY
+            const dismissThreshold = 120
+
+            if (deltaY > dismissThreshold) {
+                dismissSwipedModal()
             } else {
-                modalContent.style.transform = 'translateX(-50%) translateY(-50%)';
-                modal.style.opacity = '1';
+                modalContent.style.transform = 'translateX(-50%) translateY(0)'
+                modal.style.opacity = '1'
             }
-        });
+        })
+
+        let isMouseDragging = false
+        let mouseStartY = 0
+        let mouseCurrentY = 0
+
+        modalContent.addEventListener('mousedown', (e) => {
+            if (prefersReducedMotion) return
+
+            mouseStartY = e.clientY
+            mouseCurrentY = mouseStartY
+            isMouseDragging = true
+            modalContent.style.transition = 'none'
+            modal.style.transition = 'none'
+            modalContent.style.cursor = 'grabbing'
+
+            document.body.style.userSelect = 'none'
+            document.body.style.webkitUserSelect = 'none'
+
+            e.preventDefault()
+        })
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isMouseDragging) return
+
+            mouseCurrentY = e.clientY
+            const deltaY = mouseCurrentY - mouseStartY
+
+            if (deltaY <= 0) return
+
+            modalContent.style.transform = `translateX(-50%) translateY(${Math.min(deltaY, window.innerHeight)}px)`
+            const opacity = Math.max(1 - (deltaY / 400), 0.2)
+            modal.style.opacity = opacity.toString()
+        })
+
+        document.addEventListener('mouseup', () => {
+            if (!isMouseDragging) return
+
+            isMouseDragging = false
+            modalContent.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+            modal.style.transition = 'opacity 0.3s ease'
+            modalContent.style.cursor = ''
+
+            document.body.style.userSelect = ''
+            document.body.style.webkitUserSelect = ''
+
+            const deltaY = mouseCurrentY - mouseStartY
+            const dismissThreshold = 120
+
+            if (deltaY > dismissThreshold) {
+                dismissSwipedModal()
+            } else {
+                modalContent.style.transform = 'translateX(-50%) translateY(0)'
+                modal.style.opacity = '1'
+            }
+        })
     }
 
-    const modalBackground = modal.querySelector('.modal-background');
+    const modalBackground = modal.querySelector('.modal-background')
     if (modalBackground) {
         modalBackground.addEventListener('click', () => {
-            toggleVisibility(modal);
-        });
+            toggleVisibility(modal)
+        })
     }
-
 
     const hideElement = (element) => {
         element.style.display = 'none'
@@ -156,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     await navigator.share({
                         title: 'danré',
                         text: 'check out my contact card',
-                        url: window.location.href,
+                        url: window.location.href
                     })
                 } catch (error) {
                     if (error.name !== 'AbortError') {
@@ -167,7 +245,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } else if (shareBtn) {
         shareBtn.addEventListener('click', () => {
-            toggleVisibility(modal)
+            if (!modal.classList.contains('show')) {
+                toggleVisibility(modal)
+            }
             showElementFlex(copyView)
             hideElement(qrView)
         })
@@ -175,25 +255,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (showQRBtn) {
         showQRBtn.addEventListener('click', () => {
-            // console.log('QR button clicked - opening modal');
-            toggleVisibility(modal)
+            if (!modal.classList.contains('show')) {
+                toggleVisibility(modal)
+            }
             showElementBlock(qrView)
             hideElement(copyView)
         })
     } else {
-        console.error('showQR button not found');
-    }
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            toggleVisibility(modal)
-        })
+        console.error('showQR button not found')
     }
 
     copyURLBtn.addEventListener('click', async () => {
         const iconText = copyURLBtn.querySelector('span.iconColor')
-        if (!iconText) return;
-        const originalText = iconText.innerText;
+        if (!iconText) return
+        const originalText = iconText.innerText
         try {
             await navigator.clipboard.writeText(window.location.href)
             iconText.innerText = 'copied'
@@ -237,10 +312,10 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 fire(0.25, {
                     spread: 26,
-                    startVelocity: 55,
+                    startVelocity: 55
                 })
                 fire(0.2, {
-                    spread: 60,
+                    spread: 60
                 })
                 fire(0.35, {
                     spread: 100,
@@ -255,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 fire(0.1, {
                     spread: 120,
-                    startVelocity: 45,
+                    startVelocity: 45
                 })
             }, i * (isLowEndDevice ? 200 : 100))
         }
@@ -282,17 +357,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle')
     const html = document.documentElement
 
-    function closeModalOnClickOutside(event) {
-        const modalContent = modal.querySelector('.modal-content');
-        if (modal.classList.contains('show') &&
-            !modalContent.contains(event.target) &&
-            event.target !== showQRBtn && !showQRBtn?.contains(event.target) &&
-            event.target !== shareBtn && !shareBtn?.contains(event.target) &&
-            event.target !== themeToggle && !themeToggle?.contains(event.target)) {
-            toggleVisibility(modal);
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('show')) {
+            toggleVisibility(modal)
         }
-    }
-    document.addEventListener('click', closeModalOnClickOutside, true);
+    })
 
     const setTheme = (theme) => {
         html.classList.add('theme-transitioning')
@@ -307,9 +376,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const savedTheme = localStorage.getItem('theme')
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light')
     setTheme(initialTheme)
-
 
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {

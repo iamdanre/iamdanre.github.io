@@ -193,17 +193,21 @@ button {
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+  pointer-events: none;
 }
 
 #modal.show {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.3s ease, visibility 0s 0s;
 }
 
 #modal.hide {
   opacity: 0;
-  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+  pointer-events: none;
 }
 
 .modal-background {
@@ -212,8 +216,15 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.modal-background:hover {
+  background: rgba(0, 0, 0, 0.65);
 }
 
 .modal-content {
@@ -225,16 +236,21 @@ button {
   max-width: 30rem;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 1.25rem 1.25rem 0 0;
   border: 1px solid var(--glass-border);
   border-bottom: none;
   box-shadow: 0 -8px 32px var(--shadow-heavy);
-  padding: 1rem;
-  min-height: 200px;
-  max-height: 80vh;
+  padding: 1.25rem;
+  min-height: 220px;
+  max-height: 85vh;
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
   color: var(--text-color);
+  cursor: grab;
+}
+
+.modal-content:active {
+  cursor: grabbing;
 }
 
 #modal.show .modal-content {
@@ -248,17 +264,26 @@ button {
 .modal-content::before {
   content: "";
   display: block;
-  width: 40px;
+  width: 48px;
   height: 4px;
   background: var(--glass-border);
   border-radius: 2px;
-  margin: 0 auto 1rem auto;
-  opacity: 0.7;
+  margin: 0 auto 1.25rem auto;
+  opacity: 0.8;
   cursor: grab;
+  transition: all 0.3s ease;
+}
+
+.modal-content:hover::before {
+  opacity: 1;
+  width: 56px;
+  background: var(--text-color);
 }
 
 .modal-content:active::before {
   cursor: grabbing;
+  background: var(--theme-purple-1);
+  width: 64px;
 }
 
 #themeToggle {
@@ -330,80 +355,10 @@ button {
   box-shadow: 0 -8px 32px var(--shadow-heavy);
 }
 
-#close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  color: var(--text-color);
-  cursor: pointer;
-  padding: 0.75rem;
-  border-radius: 50%;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 8px var(--shadow-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-}
-
-#close:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 20px var(--shadow-medium);
-  background: var(--glass-border);
-}
-
-[data-theme="dark"] #close:hover {
-  box-shadow: 0 6px 20px var(--shadow-medium), 0 0 10px var(--theme-purple-1);
-  border-color: var(--theme-purple-1);
-}
-
-[data-theme="light"] #close:hover {
-  box-shadow: 0 6px 20px var(--shadow-medium), 0 0 10px var(--theme-blue-3);
-  border-color: var(--theme-blue-3);
-}
-
-#close:active {
-  transform: scale(0.9);
-}
-
-#close:focus-visible {
-  outline-offset: 2px;
-}
-
-[data-theme="dark"] #close:focus-visible {
-  outline: 2px solid var(--theme-purple-1);
-}
-
-[data-theme="light"] #close:focus-visible {
-  outline: 2px solid var(--theme-blue-3);
-}
-
-#close .icon svg path {
-  stroke: var(--text-color) !important;
-}
-
-#close .icon {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#close .icon svg {
-  width: 20px;
-  height: 20px;
-}
-
-@media (max-width: 480px) {
-  .modal-content {
-    max-width: 100vw;
-    border-radius: 1rem 1rem 0 0;
-  }
+/* hide the close button entirely */
+#close,
+#close * {
+  display: none !important;
 }
 
 #copyView,
@@ -436,30 +391,44 @@ button {
   width: 100%;
   align-items: center;
   justify-content: center;
-  border-radius: 5rem;
+  border-radius: 0.75rem;
   padding: 1rem 1.5rem;
-  border: none;
+  border: 1px solid var(--glass-border);
   outline: 0;
   cursor: pointer;
   box-sizing: border-box;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    box-shadow 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
 }
 
 #copyURL:hover,
 #dlKey:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
+  border-color: var(--theme-purple-1);
 }
 
 [data-theme="dark"] #copyURL:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2),
     0 0 15px var(--theme-purple-1-alpha);
-  background-color: #7d67b8;
+  background: rgba(171, 148, 222, 0.2);
 }
 
 [data-theme="light"] #copyURL:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1), 0 0 15px var(--theme-blue-1-alpha);
-  background-color: #5fb4e2;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1),
+    0 0 15px var(--theme-blue-1-alpha);
+  background: rgba(95, 180, 226, 0.2);
+  color: var(--text-color);
+}
+
+#copyURL:active,
+#dlKey:active {
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s ease;
 }
 
 #copyURL span,
@@ -473,13 +442,37 @@ button {
   align-items: center;
   margin: 0 1rem;
   text-align: center;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+#qrView h3 {
+  margin: 1.5rem 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+#qrView p {
+  margin: 0 0 1rem 0;
+  opacity: 0.8;
+  font-size: 0.9rem;
 }
 
 #qr {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin: 1rem 0;
+  margin: 0.5rem 0 1rem 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px var(--shadow-light);
+  transition: all 0.3s ease;
+}
+
+#qr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--shadow-medium);
 }
 
 .qrCode {
@@ -488,6 +481,12 @@ button {
   height: auto;
   display: block;
   margin: 0 auto;
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.qrCode:hover {
+  transform: scale(1.05);
 }
 
 header {
@@ -608,6 +607,7 @@ header {
   #topActions {
     flex-direction: column !important;
     align-items: flex-end;
+    margin-bottom: 4rem;
   }
 
   #topActions button {
