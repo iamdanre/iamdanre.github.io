@@ -41,24 +41,24 @@
         <table>
           <tr class="stagger_data_anim">
             <td class="animate__animated animate__zoomIn">
-              <a class="social" aria-label="github" href="https://github.com/iamdanre" target="_blank"><i
+              <a class="social" aria-label="github" href="https://github.com/iamdanre" target="_blank" rel="noopener"><i
                   class="fab fa-github"></i></a>
             </td>
             <td class="animate__animated animate__zoomIn">
               <a class="social" aria-label="spotify"
                 href="https://open.spotify.com/user/ob7mvyi83kza9lw510kipb786?si=Z31DBcGBRyWuYXXsWrIQeg"
-                target="_blank"><i class="fab fa-spotify"></i></a>
+                target="_blank" rel="noopener"><i class="fab fa-spotify"></i></a>
             </td>
             <td class="animate__animated animate__zoomIn">
-              <a class="social" aria-label="instagram" href="https://www.instagram.com/_danre_/" target="_blank"><i
+              <a class="social" aria-label="instagram" href="https://www.instagram.com/_danre_/" target="_blank" rel="noopener"><i
                   class="fab fa-instagram"></i></a>
             </td>
             <td class="animate__animated animate__zoomIn">
-              <a class="social" aria-label="telegram" href="https://t.me/xp_x_qx/" target="_blank"><i
+              <a class="social" aria-label="telegram" href="https://t.me/xp_x_qx/" target="_blank" rel="noopener"><i
                   class="fab fa-telegram-plane"></i></a>
             </td>
             <td class="animate__animated animate__zoomIn">
-              <a class="social" aria-label="tumblr" href="https://iamdanre.tumblr.com/" target="_blank"><i
+              <a class="social" aria-label="tumblr" href="https://iamdanre.tumblr.com/" target="_blank" rel="noopener"><i
                   class="fab fa-tumblr"></i></a>
             </td>
           </tr>
@@ -117,22 +117,22 @@
     <div id="artifact">
       <h2>ArtiFact</h2>
       <div id="videos">
-        <video autoplay loop muted playsinline>
+        <video autoplay loop muted playsinline aria-label="ArtiFact demo on macOS">
           <!-- HEVC video for safari -->
           <source src="img/artifact/mac.mov" type="video/mp4;codecs=hvc1" />
           <!-- WebM video for chrome -->
           <source src="img/artifact/mac.webm" type="video/webm" />
         </video>
-        <video autoplay loop muted playsinline>
+        <video autoplay loop muted playsinline aria-label="ArtiFact demo on iPad">
           <source src="img/artifact/iPad.mov" type="video/mp4;codecs=hvc1" />
           <source src="img/artifact/iPad.webm" type="video/webm" />
         </video>
-        <video autoplay loop muted playsinline>
+        <video autoplay loop muted playsinline aria-label="ArtiFact demo on iPhone">
           <source src="img/artifact/iPhone.mov" type="video/mp4;codecs=hvc1" />
           <source src="img/artifact/iPhone.webm" type="video/webm" />
         </video>
       </div>
-      <video id="artifactVideo" width="100%" autoplay loop muted playsinline>
+      <video id="artifactVideo" width="100%" autoplay loop muted playsinline aria-label="ArtiFact full demo video">
         <source src="img/artifact/artifactdemo.mp4" type="video/mp4" />
       </video>
 
@@ -149,7 +149,7 @@
         news on the fly.<br />
         Check it out on
         <a href="https://github.com/COS301-SE-2020/AI-Online-Assistant-Fake-News-Detector" aria-label="artifact github"
-          target="_blank">Github</a>!
+          target="_blank" rel="noopener">Github</a>!
       </p>
     </div>
     <br />
@@ -169,7 +169,7 @@
       <p>
         Airbnb clone written in PHP. Project I did for a multimedia course.
         Code's on
-        <a href="https://github.com/iamdanre/lessor" target="_blank" aria-label="lessor github">Github</a>.
+        <a href="https://github.com/iamdanre/lessor" target="_blank" rel="noopener" aria-label="lessor github">Github</a>.
       </p>
     </div>
 
@@ -181,7 +181,7 @@
       </div>
       <p>
         Website for my twin sister's Kinderkinetics practice. Check it out
-        <a href="https://haptichands.net/" aria-label="hapticHands website" target="_blank">here</a>.
+        <a href="https://haptichands.net/" aria-label="hapticHands website" target="_blank" rel="noopener">here</a>.
       </p>
     </div>
 
@@ -189,7 +189,7 @@
     <div id="Securitree">
       <h2>SecuriTree</h2>
       <div class="sec">
-        <video id="secVideo" width="100%" loop muted playsinline>
+        <video id="secVideo" width="100%" loop muted playsinline aria-label="SecuriTree application demo">
           <source src="img/securitree/st.mp4" type="video/mp4" />
         </video>
       </div>
@@ -197,7 +197,7 @@
         Recruiting exercise I did for a job interview. Built using MongoDB
         Atlas, Mongoose, Node.js and Angular.js <br />
         <br />
-        <a href="https://github.com/iamdanre/SecuriTree" target="_blank" aria-label="securitree github">Link to the
+        <a href="https://github.com/iamdanre/SecuriTree" target="_blank" rel="noopener" aria-label="securitree github">Link to the
           repository.</a>
       </p>
       <p>
@@ -218,7 +218,7 @@
       </div>
       <p>
         Demo app built using Vue and MongoDB. Code's on
-        <a href="https://github.com/iamdanre/clientLink" target="_blank" aria-label="clientLink github">Github</a>.
+        <a href="https://github.com/iamdanre/clientLink" target="_blank" rel="noopener" aria-label="clientLink github">Github</a>.
       </p>
     </div>
   </div>
@@ -250,10 +250,13 @@
         </td>
         <td>
           <form action="https://airform.io/dev.danre@icloud.com" method="POST">
-            <input name="name" type="text" placeholder="name" />
-            <input name="email" type="email" placeholder="email" required />
+            <label for="contact-name" class="sr-only">Name</label>
+            <input id="contact-name" name="name" type="text" placeholder="name" />
+            <label for="contact-email" class="sr-only">Email</label>
+            <input id="contact-email" name="email" type="email" placeholder="email" required />
             <br />
-            <textarea name="message" placeholder="your message" rows="4" required></textarea>
+            <label for="contact-message" class="sr-only">Message</label>
+            <textarea id="contact-message" name="message" placeholder="your message" rows="4" required></textarea>
             <br />
             <button class="btn_one" type="submit">
               send <i class="fas fa-paper-plane"></i>
@@ -265,7 +268,7 @@
   </div>
   <div id="footer">
     made on earth by a human <br />
-    <a href="https://github.com/iamdanre" target="_blank">iamdanre</a>
+    <a href="https://github.com/iamdanre" target="_blank" rel="noopener">iamdanre</a>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" name="jquery"></script>
   <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.min.js" name="plyr"></script>
