@@ -118,3 +118,7 @@ function changeFavicon () {
   const delay = imageCounter % 2 === 0 ? 1000 : 500
   setTimeout(changeFavicon, delay)
 }
+
+function closemagnify () {
+  document.getElementById('magnify').style.display = 'none'
+}
