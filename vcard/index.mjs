@@ -1,364 +1,278 @@
+/* global confetti, localStorage, window, document, navigator, confirm */
+
 import './confetti.min.js'
 
-document.addEventListener('DOMContentLoaded', () => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+import { Workbox } from './workbox-window.prod.mjs'
 
-    initializeAnimations()
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+const initializeServiceWorker = () => {
+    if ('serviceWorker' in navigator) {
+        const wb = new Workbox('./sw.js')
+
+        wb.addEventListener('installed', (event) => {
+            if (event.isUpdate) {
+                console.info('New service worker available. Refresh to update.')
+                if (confirm('A new version is available. Refresh to update?')) {
+                    window.location.reload()
+                }
+            }
+        })
+
+        wb.register()
+            .then((registration) => {
+                if (registration) {
+                    console.debug('Service worker registered successfully:', registration.scope)
+                }
+            })
+            .catch((error) => {
+                console.error('Service worker registration failed:', error)
+            })
+        return
+    }
+    console.warn('Service worker is not supported in this browser.')
+}
+
+const initializeAnimations = () => {
+    if (prefersReducedMotion) {
+        document.querySelectorAll('#topActions button, #profilePhoto, #info, .action-button').forEach((el) => {
+            el.style.opacity = '1'
+            el.style.transform = 'none'
+        })
+        return
+    }
+
+    const animate = (selector, delay, initialOpacity = 0, initialTransform = 'translateY(20px)') => {
+        document.querySelectorAll(selector).forEach((el, index) => {
+            el.style.opacity = String(initialOpacity)
+            el.style.transform = initialTransform
+            setTimeout(() => {
+                el.style.opacity = '1'
+                el.style.transform = 'none'
+            }, delay + index * 100)
+        })
+    }
+
+    animate('#topActions button', 100, 0, 'translateY(-10px)')
+    animate('#profilePhoto', 300, 0, 'scale(0.8) translateY(0)')
+    animate('#info', 500)
+    animate('.action-button', 700)
+}
+
+const initializeTheme = () => {
+    const themeToggle = document.getElementById('themeToggle')
+    const html = document.documentElement
+
+    const setTheme = (theme) => {
+        html.classList.add('theme-transitioning')
+        html.setAttribute('data-theme', theme)
+        localStorage.setItem('theme', theme)
+        setTimeout(() => {
+            html.classList.remove('theme-transitioning')
+        }, 500)
+    }
+
+    const savedTheme = localStorage.getItem('theme')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light')
+    setTheme(initialTheme)
+
+    themeToggle?.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme')
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+        setTheme(newTheme)
+    })
+}
+
+const initializeModal = () => {
     const modal = document.getElementById('modal')
-    const copyView = document.getElementById('copyView')
-    const copyURLBtn = document.getElementById('copyURL')
-    const qrView = document.getElementById('qrView')
-    const shareBtn = document.getElementById('share')
-    const showQRBtn = document.getElementById('showQR')
+    if (!modal) return () => {}
+
+    const modalContent = modal.querySelector('.modal-content')
+    const modalBackground = modal.querySelector('.modal-background')
 
     let startY = 0
-    let currentY = 0
     let isDragging = false
 
-    // Prevent pull-to-refresh when modal is open
     const preventPullToRefresh = (e) => {
-        if (modal.classList.contains('show')) {
-            e.preventDefault()
-        }
+        if (modal.classList.contains('show')) e.preventDefault()
     }
 
-    function initializeAnimations() {
-        if (prefersReducedMotion) {
-            const allElements = document.querySelectorAll('#topActions button, #profilePhoto, #info, .action-button')
-            allElements.forEach(element => {
-                element.style.opacity = '1'
-                element.style.transform = 'none'
-            })
-
-            return
-        }
-
-        const topActionButtons = document.querySelectorAll('#topActions button')
-        topActionButtons.forEach((button, index) => {
-            setTimeout(() => {
-                button.style.opacity = '1'
-                button.style.transform = 'translateY(0)'
-            }, 100 + (index * 100))
-        })
-
-        const profilePhoto = document.getElementById('profilePhoto')
-        if (profilePhoto) {
-            setTimeout(() => {
-                profilePhoto.style.opacity = '1'
-                profilePhoto.style.transform = 'scale(1) translateY(0)'
-            }, 300)
-        }
-
-        const info = document.getElementById('info')
-        if (info) {
-            setTimeout(() => {
-                info.style.opacity = '1'
-                info.style.transform = 'translateY(0)'
-            }, 500)
-        }
-
-        const actionButtons = document.querySelectorAll('.action-button')
-        actionButtons.forEach((button, index) => {
-            setTimeout(() => {
-                button.style.opacity = '1'
-                button.style.transform = 'translateY(0)'
-            }, 700 + (index * 100))
-        })
-    }
-
-    const toggleVisibility = (element) => {
-        if (!element) {
-            console.error('Modal element not found')
-            return
-        }
-
-        const isHidden = !element.classList.contains('show')
-
+    const toggleVisibility = () => {
+        const isHidden = !modal.classList.contains('show')
         if (isHidden) {
-            element.style.visibility = 'visible'
-            element.classList.remove('hide')
-            element.classList.add('show')
-            // Prevent pull-to-refresh when modal opens
+            modal.style.visibility = 'visible'
+            modal.classList.add('show')
             document.body.addEventListener('touchstart', preventPullToRefresh, { passive: false })
             document.body.addEventListener('touchmove', preventPullToRefresh, { passive: false })
             return
         }
-        element.classList.remove('show')
-        element.classList.add('hide')
-        // Re-enable pull-to-refresh when modal closes
-        document.body.removeEventListener('touchstart', preventPullToRefresh)
-        document.body.removeEventListener('touchmove', preventPullToRefresh)
-        setTimeout(() => {
-            element.style.visibility = 'hidden'
-            const modalContent = element.querySelector('.modal-content')
-            element.style.opacity = ''
-            if (modalContent) {
-                modalContent.style.transform = ''
-                modalContent.style.transition = ''
-            }
-        }, 400)
-    }
-
-    const modalContent = modal.querySelector('.modal-content')
-
-    function dismissSwipedModal() {
-        if (navigator.vibrate) {
-            navigator.vibrate(50)
-        }
         modal.classList.remove('show')
-        modal.classList.add('hide')
-        modalContent.style.transform = 'translateX(-50%) translateY(100%)'
-        modal.style.opacity = '0'
-        // Re-enable pull-to-refresh when modal is dismissed
         document.body.removeEventListener('touchstart', preventPullToRefresh)
         document.body.removeEventListener('touchmove', preventPullToRefresh)
         setTimeout(() => {
             modal.style.visibility = 'hidden'
-            modal.classList.remove('hide')
-            // Reset for next time
-            modal.style.opacity = ''
-            modal.style.transition = ''
-            modalContent.style.transform = ''
-            modalContent.style.transition = ''
-        }, 400)
+            if (modalContent) {
+                modalContent.style.transform = ''
+                modalContent.style.transition = ''
+            }
+        }, 300)
+    }
+
+    const handleDragEnd = (deltaY) => {
+        isDragging = false
+        if (modalContent) modalContent.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        modal.style.transition = 'opacity 0.3s ease'
+
+        const dismissThreshold = 120
+        if (deltaY > dismissThreshold) {
+            if (navigator.vibrate) navigator.vibrate(50)
+            toggleVisibility()
+            if (modalContent) modalContent.style.transform = 'translateX(-50%) translateY(100%)'
+            modal.style.opacity = '0'
+            return
+        }
+        if (modalContent) modalContent.style.transform = 'translateX(-50%) translateY(0)'
+        modal.style.opacity = '1'
     }
 
     if (modalContent) {
-        modalContent.addEventListener('touchstart', (e) => {
-            if (prefersReducedMotion) return
+        modalContent.addEventListener(
+            'touchstart',
+            (e) => {
+                startY = e.touches[0].clientY
+                isDragging = true
+                modalContent.style.transition = 'none'
+                modal.style.transition = 'none'
+            },
+            { passive: true }
+        )
 
-            startY = e.touches[0].clientY
-            currentY = startY
-            isDragging = true
-            modalContent.style.transition = 'none'
-            modal.style.transition = 'none'
-        }, { passive: true })
-
-        modalContent.addEventListener('touchmove', (e) => {
-            if (!isDragging) return
-
-            currentY = e.touches[0].clientY
-            const deltaY = currentY - startY
-
-            if (deltaY <= 0) {
-                // Always prevent default for upward swipes to prevent pull-to-refresh
+        modalContent.addEventListener(
+            'touchmove',
+            (e) => {
+                if (!isDragging) return
+                const currentY = e.touches[0].clientY
+                const deltaY = currentY - startY
+                if (deltaY <= 0) {
+                    return
+                }
                 e.preventDefault()
-                return
-            }
-            e.preventDefault()
+                modalContent.style.transform = `translateX(-50%) translateY(${deltaY}px)`
+                modal.style.opacity = String(Math.max(1 - deltaY / 400, 0.2))
+            },
+            { passive: false }
+        )
 
-            modalContent.style.transform = `translateX(-50%) translateY(${Math.min(deltaY, window.innerHeight)}px)`
-            const opacity = Math.max(1 - (deltaY / 400), 0.2)
-            modal.style.opacity = opacity.toString()
-        }, { passive: false })
-
-        modalContent.addEventListener('touchend', () => {
+        modalContent.addEventListener('touchend', (e) => {
             if (!isDragging) return
-
-            isDragging = false
-            modalContent.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-            modal.style.transition = 'opacity 0.3s ease'
-
-            const deltaY = currentY - startY
-            const dismissThreshold = 120
-
-            if (deltaY > dismissThreshold) {
-                dismissSwipedModal()
-            } else {
-                modalContent.style.transform = 'translateX(-50%) translateY(0)'
-                modal.style.opacity = '1'
-            }
-        })
-
-        let isMouseDragging = false
-        let mouseStartY = 0
-        let mouseCurrentY = 0
-
-        modalContent.addEventListener('mousedown', (e) => {
-            if (prefersReducedMotion) return
-
-            mouseStartY = e.clientY
-            mouseCurrentY = mouseStartY
-            isMouseDragging = true
-            modalContent.style.transition = 'none'
-            modal.style.transition = 'none'
-            modalContent.style.cursor = 'grabbing'
-
-            document.body.style.userSelect = 'none'
-            document.body.style.webkitUserSelect = 'none'
-
-            e.preventDefault()
-        })
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isMouseDragging) return
-
-            mouseCurrentY = e.clientY
-            const deltaY = mouseCurrentY - mouseStartY
-
-            if (deltaY <= 0) return
-
-            modalContent.style.transform = `translateX(-50%) translateY(${Math.min(deltaY, window.innerHeight)}px)`
-            const opacity = Math.max(1 - (deltaY / 400), 0.2)
-            modal.style.opacity = opacity.toString()
-        })
-
-        document.addEventListener('mouseup', () => {
-            if (!isMouseDragging) return
-
-            isMouseDragging = false
-            modalContent.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-            modal.style.transition = 'opacity 0.3s ease'
-            modalContent.style.cursor = ''
-
-            document.body.style.userSelect = ''
-            document.body.style.webkitUserSelect = ''
-
-            const deltaY = mouseCurrentY - mouseStartY
-            const dismissThreshold = 120
-
-            if (deltaY > dismissThreshold) {
-                dismissSwipedModal()
-            } else {
-                modalContent.style.transform = 'translateX(-50%) translateY(0)'
-                modal.style.opacity = '1'
-            }
+            const deltaY = e.changedTouches[0].clientY - startY
+            handleDragEnd(deltaY)
         })
     }
 
-    const modalBackground = modal.querySelector('.modal-background')
-    if (modalBackground) {
-        modalBackground.addEventListener('click', () => {
-            toggleVisibility(modal)
-        })
-    }
+    modalBackground?.addEventListener('click', toggleVisibility)
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('show')) toggleVisibility()
+    })
 
-    const hideElement = (element) => {
-        element.style.display = 'none'
-    }
+    return toggleVisibility
+}
 
-    const showElementFlex = (element) => {
-        element.style.display = 'flex'
-    }
+const initializeShare = (toggleModalVisibility) => {
+    const shareBtn = document.getElementById('share')
+    const copyView = document.getElementById('copyView')
+    const qrView = document.getElementById('qrView')
+    const copyURLBtn = document.getElementById('copyURL')
 
-    const showElementBlock = (element) => {
-        element.style.display = 'block'
+    const showView = (viewToShow, viewToHide) => {
+        if (viewToShow) viewToShow.style.display = viewToShow === copyView ? 'flex' : 'block'
+        if (viewToHide) viewToHide.style.display = 'none'
     }
 
     if (navigator.canShare) {
-        if (shareBtn) {
-            shareBtn.addEventListener('click', async () => {
-                try {
-                    await navigator.share({
-                        title: 'danré',
-                        text: 'check out my contact card',
-                        url: window.location.href
-                    })
-                } catch (error) {
-                    if (error.name !== 'AbortError') {
-                        console.error('Sharing failed', error)
-                    }
-                }
-            })
-        }
-    } else if (shareBtn) {
-        shareBtn.addEventListener('click', () => {
-            if (!modal.classList.contains('show')) {
-                toggleVisibility(modal)
+        shareBtn?.addEventListener('click', async () => {
+            try {
+                await navigator.share({
+                    title: 'danré',
+                    text: 'check out my contact card',
+                    url: window.location.href,
+                })
+            } catch (error) {
+                if (error.name !== 'AbortError') console.error('Sharing failed', error)
             }
-            showElementFlex(copyView)
-            hideElement(qrView)
-        })
-    }
-
-    if (showQRBtn) {
-        showQRBtn.addEventListener('click', () => {
-            if (!modal.classList.contains('show')) {
-                toggleVisibility(modal)
-            }
-            showElementBlock(qrView)
-            hideElement(copyView)
         })
     } else {
-        console.error('showQR button not found')
+        shareBtn?.addEventListener('click', () => {
+            toggleModalVisibility()
+            showView(copyView, qrView)
+        })
     }
 
-    copyURLBtn.addEventListener('click', async () => {
+    copyURLBtn?.addEventListener('click', async () => {
         const iconText = copyURLBtn.querySelector('span.iconColor')
         if (!iconText) return
         const originalText = iconText.innerText
         try {
             await navigator.clipboard.writeText(window.location.href)
             iconText.innerText = 'copied'
-            setTimeout(() => {
-                iconText.innerText = originalText
-            }, 1200)
         } catch (error) {
             console.error('Copy to clipboard failed:', error)
             iconText.innerText = 'could not copy'
+        } finally {
             setTimeout(() => {
                 iconText.innerText = originalText
-            }, 1500)
+            }, 1200)
         }
     })
-    // end qr modal
+}
 
-    // begin easter egg
+const initializeQREvent = (toggleModalVisibility) => {
+    const showQRBtn = document.getElementById('showQR')
+    const qrView = document.getElementById('qrView')
+    const copyView = document.getElementById('copyView')
+
+    showQRBtn?.addEventListener('click', () => {
+        toggleModalVisibility()
+        if (qrView) qrView.style.display = 'block'
+        if (copyView) copyView.style.display = 'none'
+    })
+}
+
+const initializeEasterEgg = () => {
     let lastTap = 0
+    const profilePhoto = document.getElementById('profilePhoto')
 
     const triggerConfetti = (event) => {
         event.preventDefault()
-
-        if (prefersReducedMotion || !window.confetti) {
-            return
-        }
+        if (prefersReducedMotion || !window.confetti) return
 
         const isLowEndDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4
-        const count = isLowEndDevice ? 1 : 3
-
-        const defaults = {
-            origin: { y: 0.7 }
+        const particleMultiplier = isLowEndDevice ? 0.5 : 1
+        const fire = (particleRatio, opts) => {
+            window.confetti({
+                origin: { y: 0.7 },
+                ...opts,
+                particleCount: Math.floor(200 * particleRatio * particleMultiplier),
+            })
         }
 
-        function fire(particleRatio, opts) {
-            confetti(Object.assign({}, defaults, opts, {
-                particleCount: Math.floor(200 * particleRatio * (isLowEndDevice ? 0.5 : 1))
-            }))
+        const confettiBurst = () => {
+            fire(0.25, { spread: 26, startVelocity: 55 })
+            fire(0.2, { spread: 60 })
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 })
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 })
+            fire(0.1, { spread: 120, startVelocity: 45 })
         }
 
-        for (let i = 0; i < count; i++) {
-            setTimeout(() => {
-                fire(0.25, {
-                    spread: 26,
-                    startVelocity: 55
-                })
-                fire(0.2, {
-                    spread: 60
-                })
-                fire(0.35, {
-                    spread: 100,
-                    decay: 0.91,
-                    scalar: 0.8
-                })
-                fire(0.1, {
-                    spread: 120,
-                    startVelocity: 25,
-                    decay: 0.92,
-                    scalar: 1.2
-                })
-                fire(0.1, {
-                    spread: 120,
-                    startVelocity: 45
-                })
-            }, i * (isLowEndDevice ? 200 : 100))
+        for (let i = 0; i < (isLowEndDevice ? 1 : 3); i++) {
+            setTimeout(confettiBurst, i * (isLowEndDevice ? 200 : 100))
         }
     }
 
     const handleDoubleTap = (event) => {
         const currentTime = Date.now()
-        const tapLength = currentTime - lastTap
-        if (tapLength < 300 && tapLength > 0) {
+        if (currentTime - lastTap < 300) {
             triggerConfetti(event)
             lastTap = 0
         } else {
@@ -366,43 +280,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const profilePhoto = document.getElementById('profilePhoto')
-    if (profilePhoto) {
-        profilePhoto.addEventListener('contextmenu', triggerConfetti)
-        profilePhoto.addEventListener('touchstart', handleDoubleTap)
-    }
-    // end easter egg
+    profilePhoto?.addEventListener('contextmenu', triggerConfetti)
+    profilePhoto?.addEventListener('touchstart', handleDoubleTap)
+}
 
-    const themeToggle = document.getElementById('themeToggle')
-    const html = document.documentElement
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.classList.contains('show')) {
-            toggleVisibility(modal)
-        }
-    })
-
-    const setTheme = (theme) => {
-        html.classList.add('theme-transitioning')
-
-        html.setAttribute('data-theme', theme)
-        localStorage.setItem('theme', theme)
-
-        setTimeout(() => {
-            html.classList.remove('theme-transitioning')
-        }, 500)
-    }
-
-    const savedTheme = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light')
-    setTheme(initialTheme)
-
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme')
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light'
-            setTheme(newTheme)
-        })
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    initializeServiceWorker()
+    initializeAnimations()
+    initializeTheme()
+    const toggleModalVisibility = initializeModal()
+    initializeShare(toggleModalVisibility)
+    initializeQREvent(toggleModalVisibility)
+    initializeEasterEgg()
 })

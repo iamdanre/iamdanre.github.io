@@ -1,18 +1,36 @@
 {
-    "name": "danré - Digital Business Card",
+    "name": "danré",
     "short_name": "danré",
-    "description": "Connect with danré through various social platforms and professional channels.",
-    "start_url": "./",
+    "description": "connect with danré through social platforms.",
+    "start_url": ".",
+    "scope": "/vcard/",
     "display": "standalone",
     "background_color": "#252422",
     "theme_color": "#735dad",
-    "orientation": "portrait",
+    "orientation": "any",
     "icons": [
         {
-            "src": "./waving.webp",
+            "src": "waving.webp",
             "sizes": "192x192",
-            "type": "image/webp"
+            "type": "image/webp",
+            "purpose": "any"
+        },
+        {
+            "src": "waving.webp",
+            "sizes": "420x420",
+            "type": "image/webp",
+            "purpose": "any"
+        },
+        {
+            "src": "waving.webp",
+            "sizes": "512x512",
+            "type": "image/webp",
+            "purpose": "any maskable"
         }
     ],
-    "categories": ["business", "networking", "social"]
+    "categories": [
+        "business",
+        "networking",
+        "social"
+    ]
 }
