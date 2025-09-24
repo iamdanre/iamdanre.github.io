@@ -77,7 +77,7 @@
             <img id="profilePhoto" fetchpriority="high" src="./waving.webp" alt="Memoji" style="opacity: 0; transform: scale(0.8) translateY(20px);" />
             <div id="topActions">
                 <div class="action-button-wrapper">
-                    <button type="button" id="share" style="opacity: 0; transform: translateY(-10px);">
+                    <button type="button" id="share" aria-label="Share contact card" style="opacity: 0; transform: translateY(-10px);">
                         <div class="icon topAction">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
                                 style="fill-rule: evenodd; clip-rule: evenodd; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 2">
@@ -98,7 +98,7 @@
                     </button>
                 </div>
                 <div class="action-button-wrapper">
-                    <button type="button" id="showQR" style="opacity: 0; transform: translateY(-10px);">
+                    <button type="button" id="showQR" aria-label="Show QR code" style="opacity: 0; transform: translateY(-10px);">
                         <div class="icon topAction">
                             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
                                 style="fill-rule: evenodd; clip-rule: evenodd; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 2">
@@ -112,7 +112,7 @@
                     </button>
                 </div>
                 <div class="action-button-wrapper">
-                    <button type="button" id="themeToggle" style="opacity: 0; transform: translateY(-10px);">
+                    <button type="button" id="themeToggle" aria-label="Toggle theme" style="opacity: 0; transform: translateY(-10px);">
                         <div class="icon topAction">
                             <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -255,37 +255,6 @@
     </main>
 
     <script src="./index.mjs" type="module"></script>
-    
-    <!-- Service Worker Registration -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', async () => {
-                try {
-                    const registration = await navigator.serviceWorker.register('./sw.js')
-                    console.log('Service Worker registered successfully:', registration.scope)
-                    
-                    // Handle service worker updates
-                    registration.addEventListener('updatefound', () => {
-                        const newWorker = registration.installing
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                // New service worker is available, prompt user to refresh
-                                console.log('New service worker available. Please refresh to update.')
-                                // Optionally show a notification to the user
-                                if (confirm('A new version is available. Refresh to update?')) {
-                                    window.location.reload()
-                                }
-                            }
-                        })
-                    })
-                } catch (error) {
-                    console.error('Service Worker registration failed:', error)
-                }
-            })
-        } else {
-            console.log('Service Worker is not supported in this browser.')
-        }
-    </script>
 </body>
 
 </html>

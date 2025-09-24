@@ -1,126 +1,89 @@
-const CACHE_NAME = 'vcard-v1.0.1'
-const CACHE_ASSETS = [
-    './',
-    './index.html',
-    './style.css',
-    './index.mjs',
-    './confetti.min.js',
-    './waving.webp',
-    './_nervous.webp',
-    './manifest.json',
-    '../img/qr.webp'
-]
+importScripts('./workbox-sw.js')
 
-// Cache version for debugging
-console.log('Service Worker: Cache version', CACHE_NAME)
+if (workbox) {
+    console.info('yay! workbox is loaded ૮ • ᴥ • ა')
 
-// Install service worker and cache assets
-self.addEventListener('install', (event) => {
-    console.log('Service Worker: Installing...')
-    
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('Service Worker: Caching files')
-                return cache.addAll(CACHE_ASSETS)
-            })
-            .then(() => {
-                console.log('Service Worker: Cached all assets')
-                // Force the waiting service worker to become the active service worker
-                return self.skipWaiting()
-            })
-            .catch((error) => {
-                console.error('Service Worker: Cache failed', error)
-            })
-    )
-})
+    workbox.core.setCacheNameDetails({
+        prefix: 'danre-vcard',
+        suffix: 'v2.0.1',
+        precache: 'precache',
+        runtime: 'runtime',
+    })
 
-// Activate service worker and clean up old caches
-self.addEventListener('activate', (event) => {
-    console.log('Service Worker: Activating...')
-    
-    event.waitUntil(
-        caches.keys()
-            .then((cacheNames) => {
-                return Promise.all(
-                    cacheNames.map((cache) => {
-                        // Delete old cache versions
-                        if (cache !== CACHE_NAME) {
-                            console.log('Service Worker: Clearing old cache', cache)
-                            return caches.delete(cache)
-                        }
-                    })
-                )
-            })
-            .then(() => {
-                console.log('Service Worker: Activated')
-                // Ensure the service worker takes control of all pages immediately
-                return self.clients.claim()
-            })
-    )
-})
+    workbox.navigationPreload.enable()
 
-// Fetch event - serve from cache first, then network
-self.addEventListener('fetch', (event) => {
-    // Only handle GET requests
-    if (event.request.method !== 'GET') {
-        return
-    }
+    // provide revision information for each asset to allow Workbox to properly manage updates.
+    const PRECACHE_ASSETS = [
+        { url: './', revision: '2.0.1' }, // alias for index.html
+        { url: './index.html', revision: '2.0.1' },
+        { url: './style.css', revision: '2.0.1' },
+        { url: './index.mjs', revision: '2.0.1' },
+        { url: './confetti.min.js', revision: '2.0.1' },
+        { url: './waving.webp', revision: '2.0.1' },
+        { url: './_nervous.webp', revision: '2.0.1' },
+        { url: './manifest.json', revision: '2.0.1' },
+        { url: '../img/qr.webp', revision: '2.0.1' },
+    ]
 
-    // Skip non-http requests (chrome-extension, etc.)
-    if (!event.request.url.startsWith('http')) {
-        return
-    }
+    workbox.precaching.precacheAndRoute(PRECACHE_ASSETS)
 
-    event.respondWith(
-        caches.match(event.request)
-            .then((cachedResponse) => {
-                // Return cached version if available
-                if (cachedResponse) {
-                    console.log('Service Worker: Serving from cache', event.request.url)
-                    return cachedResponse
+    // strategy 1: network first for navigation requests (HTML pages)
+    workbox.routing.registerRoute(
+        ({ request }) => request.mode === 'navigate',
+        async ({ event, request }) => {
+            try {
+                // attempt to use the preloaded navigation response.
+                const preloadResponse = await event.preloadResponse
+                if (preloadResponse) {
+                    return preloadResponse
                 }
 
-                // Otherwise fetch from network
-                console.log('Service Worker: Fetching from network', event.request.url)
-                return fetch(event.request)
-                    .then((response) => {
-                        // Don't cache non-successful responses
-                        if (!response || response.status !== 200 || response.type !== 'basic') {
-                            return response
-                        }
-
-                        // Clone response as it can only be consumed once
-                        const responseToCache = response.clone()
-
-                        // Cache the new response for future requests
-                        caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                console.log('Service Worker: Caching new resource', event.request.url)
-                                cache.put(event.request, responseToCache)
-                            })
-
-                        return response
-                    })
-                    .catch((error) => {
-                        console.error('Service Worker: Fetch failed', error)
-                        
-                        // If offline and requesting a page, return the cached index.html
-                        if (event.request.mode === 'navigate') {
-                            console.log('Service Worker: Serving offline fallback')
-                            return caches.match('./index.html')
-                        }
-                        
-                        // For other requests, we could return a generic offline page
-                        throw error
-                    })
-            })
+                // fallback to a network-first strategy for navigation.
+                const networkFirst = new workbox.strategies.NetworkFirst({
+                    cacheName: 'danre-vcard-runtime-html',
+                })
+                return await networkFirst.handle({ request })
+            } catch (error) {
+                // the catch will be triggered if both preload and network fail.
+                // in this case, we fall back to the precached index page.
+                console.warn('fetch failed; returning precached index.', error)
+                const cache = await caches.open(workbox.core.cacheNames.precache)
+                // getCacheKeyForURL will look up the correct URL, even with revisioning.
+                return await cache.match(workbox.precaching.getCacheKeyForURL('./'))
+            }
+        }
     )
-})
 
-// Listen for messages from the main thread
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
+    // strategy 2: stale-while-revalidate for CSS and JavaScript
+    workbox.routing.registerRoute(
+        ({ request }) => request.destination === 'style' || request.destination === 'script',
+        new workbox.strategies.StaleWhileRevalidate({
+            cacheName: 'danre-vcard-runtime-css-js',
+        })
+    )
+
+    // strategy 3: cache first for images
+    workbox.routing.registerRoute(
+        ({ request }) => request.destination === 'image',
+        new workbox.strategies.CacheFirst({
+            cacheName: 'danre-vcard-runtime-images',
+            plugins: [
+                new workbox.expiration.ExpirationPlugin({
+                    maxEntries: 60,
+                    maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+                }),
+            ],
+        })
+    )
+
+    // use standard service worker lifecycle events for skipWaiting and clientsClaim.
+    self.addEventListener('install', () => {
         self.skipWaiting()
-    }
-})
+    })
+
+    self.addEventListener('activate', (event) => {
+        event.waitUntil(self.clients.claim())
+    })
+} else {
+    console.warn("boo! workbox didn't load ⊙︿⊙")
+}
