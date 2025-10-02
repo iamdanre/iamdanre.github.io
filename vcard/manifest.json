@@ -5,8 +5,12 @@
     "start_url": ".",
     "scope": "/vcard/",
     "display": "standalone",
-    "background_color": "#252422",
-    "theme_color": "#735dad",
+    "display_override": [
+        "window-controls-overlay",
+        "fullscreen"
+    ],
+    "background_color": "#0d1117",
+    "theme_color": "#0d1117",
     "orientation": "any",
     "icons": [
         {

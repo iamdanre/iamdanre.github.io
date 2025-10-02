@@ -1,5 +1,36 @@
 @charset "UTF-8";
 
+/* window controls overlay */
+:root {
+  --fallback-title-bar-height: 0px;
+  --safe-area-top: max(env(titlebar-area-height, 0px), 0px);
+  --content-top-margin: max(env(titlebar-area-height, 0px) + 20px, 20px);
+}
+
+#app-title-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(titlebar-area-height, 0);
+  width: 100%;
+  -webkit-app-region: drag;
+  app-region: drag;
+  user-select: none;
+  -webkit-user-select: none;
+  z-index: 999;
+  background-color: var(--bg-color);
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+}
+
+body {
+  /* add padding to push content below the title bar with extra safe margin */
+  padding-top: var(--content-top-margin);
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
 @media screen and (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
@@ -90,7 +121,8 @@ body {
 }
 
 main {
-  margin-top: 2em;
+  margin-top: max(2em, var(--safe-area-top));
+  padding-top: 1rem;
 }
 
 p {
@@ -473,11 +505,14 @@ header {
 }
 
 .profile-container {
+  padding-top: max(1.5rem, calc(var(--safe-area-top) * 0.5 + 1rem));
   position: relative;
   margin-bottom: 1rem;
 }
 
 #topActions {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
   position: absolute;
   top: 0;
   left: 0;
@@ -513,6 +548,8 @@ header {
 }
 
 #topActions button {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -592,6 +629,7 @@ main {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  margin-top: max(0.5rem, calc(var(--safe-area-top) * 0.3));
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out,
     transform 0.4s ease-out;
   border-radius: 50%;
@@ -1256,4 +1294,46 @@ body.loading * {
 
 .stagger-9 {
   animation-delay: 0.9s;
+}
+
+/* window controls overlay active state */
+@supports (app-region: drag) {
+  body {
+    padding-top: var(--content-top-margin);
+  }
+}
+
+/* safe area for notches */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  main {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* better fullscreen mode support */
+@media (display-mode: fullscreen), (display-mode: window-controls-overlay) {
+  :root {
+    --fallback-title-bar-height: 0px;
+  }
+  
+  #app-title-bar {
+    display: block;
+  }
+  
+  .profile-container {
+    padding-top: max(2rem, calc(var(--safe-area-top) + 1.5rem));
+  }
+}
+
+/* standalone mode fallback */
+@media (display-mode: standalone) {
+  :root {
+    --fallback-title-bar-height: 30px;
+  }
 }

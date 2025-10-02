@@ -59,6 +59,33 @@ const initializeAnimations = () => {
     animate('.action-button', 700)
 }
 
+const initializeWindowControlsOverlay = () => {
+    if (!navigator.windowControlsOverlay) return
+
+    const updateTitleBarArea = () => {
+        const titleBarRect = navigator.windowControlsOverlay.getTitlebarAreaRect()
+        const isVisible = navigator.windowControlsOverlay.visible
+
+        if (isVisible && titleBarRect) {
+            document.documentElement.style.setProperty('--titlebar-area-x', `${titleBarRect.x}px`)
+            document.documentElement.style.setProperty('--titlebar-area-y', `${titleBarRect.y}px`)
+            document.documentElement.style.setProperty('--titlebar-area-width', `${titleBarRect.width}px`)
+            document.documentElement.style.setProperty('--titlebar-area-height', `${titleBarRect.height}px`)
+            document.documentElement.style.setProperty('--safe-area-top', `${titleBarRect.height}px`)
+            document.documentElement.style.setProperty('--content-top-margin', `${Math.max(titleBarRect.height + 20, 20)}px`)
+            return;
+        }
+        document.documentElement.style.setProperty('--safe-area-top', '0px')
+        document.documentElement.style.setProperty('--content-top-margin', '20px')
+    }
+
+    updateTitleBarArea()
+
+    navigator.windowControlsOverlay.addEventListener('geometrychange', () => {
+        updateTitleBarArea()
+    })
+}
+
 const initializeTheme = () => {
     const themeToggle = document.getElementById('themeToggle')
     const html = document.documentElement
@@ -285,6 +312,7 @@ const initializeEasterEgg = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    initializeWindowControlsOverlay()
     initializeServiceWorker()
     initializeAnimations()
     initializeTheme()
