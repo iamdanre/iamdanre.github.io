@@ -2,20 +2,7 @@ const jQuery = document.scripts.namedItem('jquery').ownerDocument.defaultView.jQ
 const Plyr = document.scripts.namedItem('plyr').ownerDocument.defaultView.Plyr
 
 const width = jQuery(window).width()
-const throttle = (func, limit) => {
-  let inThrottle
-  return function () {
-    const args = arguments
-    if (inThrottle) {
-      return
-    }
-    func.apply(this, args)
-    inThrottle = true
-    setTimeout(() => (inThrottle = false), limit)
-  }
-}
-
-globalThis.onscroll = throttle(() => {
+function handleScroll() {
   if (width >= 1000) {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
       jQuery('#header').css('background', '#252422')
@@ -44,25 +31,48 @@ globalThis.onscroll = throttle(() => {
       )
     }
   }
-}, 100)
+}
+
+let isScrolling = false
+window.addEventListener('scroll', () => {
+  if (!isScrolling) {
+    window.requestAnimationFrame(() => {
+      handleScroll()
+      isScrolling = false
+    })
+    isScrolling = true
+  }
+})
+
+function throttle(fn, wait) {
+  let lastTime = 0
+  return function (...args) {
+    const now = Date.now()
+    if (now - lastTime >= wait) {
+      lastTime = now
+      fn.apply(this, args)
+    }
+  }
+}
+
+window.addEventListener('scroll', throttle(handleScroll, 100))
 
 document.addEventListener('DOMContentLoaded', () => {
-  jQuery('#whyMe').on('click', () => {
+  jQuery('#whyMe').click(() => {
     jQuery('html, body').animate(
       {
-        scrollTop: jQuery('#skills').offset().top - 45
+        scrollTop: jQuery('#skills').offset().top - 45,
       },
       1000
     )
   })
-
-  jQuery('#vcardButton').on('click', () => {
-    location.href = 'vcard/'
-  })
-
   const tds = document.querySelectorAll('.stagger_data_anim td')
   tds.forEach((td, index) => {
     td.style.animationDelay = `${0.2 * (index + 1)}s`
+  })
+
+  document.getElementById('vcardButton').addEventListener('click', () => {
+    location.href = 'vcard/'
   })
 
   jQuery('a').on('click', function (event) {
@@ -73,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const hash = this.hash
     jQuery('body,html').animate(
       {
-        scrollTop: jQuery(hash).offset().top
+        scrollTop: jQuery(hash).offset().top,
       },
       1800,
       () => {
@@ -82,23 +92,38 @@ document.addEventListener('DOMContentLoaded', () => {
     )
   })
 
+  /*
+  new Plyr('#artifactVideo', {
+    title: 'Artifact Demo',
+    controls: ['play-large'],
+    muted: true,
+    clickToPlay: true,
+    hideControls: false
+  }).on('ready', () => {
+    console.log('Artifact ready')
+    // const observer = new window.IntersectionObserver((entries) => {
+    //     entries.forEach(entry => {
+    //       if (entry.isIntersecting) {
+    //         player.play()
+    //         player.elements.container.querySelector('.plyr__control').style.display = 'none'
+    //       } else {
+    //         player.pause()
+    //         player.elements.container.querySelector('.plyr__control').style.display = 'block'
+    //       }
+    //     })
+    //   }, { threshold: 0.5 })
+    //   observer.observe(player.elements.container)
+  })
+*/
+
   new Plyr('#secVideo', {
     title: 'Securitree Demo',
     controls: ['play-large'],
     muted: true,
     clickToPlay: true,
-    hideControls: true
+    hideControls: true,
   }).on('ready', () => {
-    console.debug('plyr ready for #secVideo')
-  })
-
-  new Plyr('#artifactVideo', {
-    title: 'ArtiFact Demo',
-    controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
-    muted: true,
-    clickToPlay: true
-  }).on('ready', () => {
-    console.debug('plyr ready for #artifactVideo')
+    console.debug('plyr ready')
   })
 
   changeFavicon()
@@ -106,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let imageCounter = 0
 const favicons = ['img/favicons/favicon_1.ico', 'img/favicons/favicon_2.ico', 'img/favicons/favicon_3.ico', 'img/favicons/favicon_4.ico']
-function changeFavicon () {
+const changeFavicon = () => {
   const currentIcon = document.querySelector("link[rel='icon']")
   if (currentIcon !== null) {
     currentIcon.remove()
@@ -119,4 +144,18 @@ function changeFavicon () {
   }
   const delay = imageCounter % 2 === 0 ? 1000 : 500
   setTimeout(changeFavicon, delay)
+}
+
+// register service worker for PWA offline support
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/vcard/sw.js').then(
+      (registration) => {
+        console.debug('ServiceWorker registration successful with scope: ', registration.scope)
+      },
+      (err) => {
+        console.error('ServiceWorker registration failed: ', err)
+      }
+    )
+  })
 }
