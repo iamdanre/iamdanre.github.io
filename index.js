@@ -4,31 +4,12 @@ const Plyr = document.scripts.namedItem('plyr').ownerDocument.defaultView.Plyr
 const width = jQuery(window).width()
 function handleScroll() {
   if (width >= 1000) {
-    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-      jQuery('#header').css('background', '#252422')
-      jQuery('#header').css('box-shadow', '0px 0px 20px #000')
-      jQuery('#header').css('padding', '4vh 4vw')
-      jQuery('#navigation a').hover(
-        function () {
-          jQuery(this).css('border-bottom', '2px solid rgb(255, 44, 90)')
-        },
-        function () {
-          jQuery(this).css('border-bottom', '2px solid transparent')
-        }
-      )
+    const scrolled = document.body.scrollTop > 80 || document.documentElement.scrollTop > 80
+    const header = document.getElementById('header')
+    if (scrolled) {
+      header.classList.add('scrolled')
     } else {
-      jQuery('#header').css('background', 'transparent')
-      jQuery('#header').css('color', '#fff')
-      jQuery('#header').css('box-shadow', '0px 0px 0px #252422')
-      jQuery('#header').css('padding', '6vh 4vw')
-      jQuery('#navigation a').hover(
-        function () {
-          jQuery(this).css('border-bottom', '2px solid #fff')
-        },
-        function () {
-          jQuery(this).css('border-bottom', '2px solid transparent')
-        }
-      )
+      header.classList.remove('scrolled')
     }
   }
 }
@@ -58,6 +39,29 @@ function throttle(fn, wait) {
 window.addEventListener('scroll', throttle(handleScroll, 100))
 
 document.addEventListener('DOMContentLoaded', () => {
+  // ── Theme toggle ──────────────────────────────────────────────────────────
+  const themeToggleBtn = document.getElementById('themeToggle')
+  const savedTheme = localStorage.getItem('theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+  applyTheme(savedTheme)
+
+  themeToggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation() // prevent header click-to-top triggering
+    const current = document.documentElement.getAttribute('data-theme')
+    const next = current === 'light' ? 'dark' : 'light'
+    applyTheme(next)
+    localStorage.setItem('theme', next)
+  })
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme)
+    themeToggleBtn.innerHTML = theme === 'dark'
+      ? '<i class="fas fa-sun" aria-hidden="true"></i>'
+      : '<i class="fas fa-moon" aria-hidden="true"></i>'
+    themeToggleBtn.setAttribute('aria-label',
+      theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme')
+  }
+
   jQuery('#whyMe').click(() => {
     jQuery('html, body').animate(
       {
