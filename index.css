@@ -649,6 +649,7 @@ button:focus {
   padding: 0;
   line-height: 1;
   float: right;
+  position: relative;
 }
 
 #themeToggle:hover {
@@ -660,4 +661,37 @@ button:focus {
 #themeToggle:focus {
   outline: 2px solid var(--accent-blue);
   outline-offset: 2px;
+}
+
+#moonIcon,
+#sunIcon {
+  position: absolute;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.3s ease;
+}
+
+/* Light theme - show moon, hide sun */
+[data-theme="light"] #moonIcon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  visibility: visible;
+}
+
+[data-theme="light"] #sunIcon {
+  opacity: 0;
+  transform: rotate(180deg) scale(0.5);
+  visibility: hidden;
+}
+
+/* Dark theme - show sun, hide moon */
+[data-theme="dark"] #sunIcon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  visibility: visible;
+}
+
+[data-theme="dark"] #moonIcon {
+  opacity: 0;
+  transform: rotate(-180deg) scale(0.5);
+  visibility: hidden;
 }

@@ -55,9 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme)
-    themeToggleBtn.innerHTML = theme === 'dark'
-      ? '<i class="fas fa-sun" aria-hidden="true"></i>'
-      : '<i class="fas fa-moon" aria-hidden="true"></i>'
     themeToggleBtn.setAttribute('aria-label',
       theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme')
   }
