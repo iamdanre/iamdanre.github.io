@@ -1,4 +1,53 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap'); */
+
+/* ── Theme tokens ───────────────────────────────────────────────────────────── */
+:root {
+  --bg:            #252422;
+  --bg-secondary:  #292825;
+  --text:          #ffffff;
+  --text-muted:    #6c6c6c;
+  --accent:        #735dad;
+  --accent-blue:   #339fc8;
+  --accent-pink:   #c83a69;
+  --scrollbar-track: #000000;
+  --input-border:  #735dad;
+}
+
+[data-theme="light"] {
+  --bg:            #f5f5f0;
+  --bg-secondary:  #e8e8e3;
+  --text:          #252422;
+  --text-muted:    #888888;
+  --accent:        #735dad;
+  --accent-blue:   #2a8fb5;
+  --accent-pink:   #c83a69;
+  --scrollbar-track: #cccccc;
+  --input-border:  #735dad;
+}
+
+/* ── Smooth theme transitions ───────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  transition:
+    color            0.3s ease,
+    background-color 0.3s ease,
+    border-color     0.3s ease,
+    box-shadow       0.3s ease,
+    fill             0.3s ease;
+}
+
+/* Honour reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation-duration:  0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
 body {
   font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -7,12 +56,12 @@ body {
   margin: 0px;
   max-width: 100vw;
   overflow-x: hidden;
-  color: #fff;
-  background: #252422;
+  color: var(--text);
+  background: var(--bg);
 }
 
 a:-webkit-any-link {
-  color: #735dad;
+  color: var(--accent);
   cursor: pointer;
   text-decoration: underline;
 }
@@ -21,7 +70,7 @@ a:-webkit-any-link {
   width: 100vw;
   height: 100vh;
   position: fixed;
-  background: #252422;
+  background: var(--bg);
   z-index: 999;
   display: flex;
   justify-content: center;
@@ -33,8 +82,8 @@ a:-webkit-any-link {
   animation: rotate 0.56s infinite linear;
   width: 50px;
   height: 50px;
-  border: 12px solid #735dad;
-  border-bottom: 12px solid #292825;
+  border: 12px solid var(--accent);
+  border-bottom: 12px solid var(--bg-secondary);
   border-radius: 50%;
   margin: 0;
 }
@@ -55,9 +104,16 @@ header {
   position: fixed;
   font-weight: bold;
   background: transparent;
-  color: #fff;
-  transition: 0.4s ease-in-out;
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
   z-index: 2;
+}
+
+/* Applied by JS when page is scrolled */
+header.scrolled {
+  background: var(--bg);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  padding: 4vh 4vw;
 }
 
 header table {
@@ -89,7 +145,7 @@ header table {
   right: 0;
   margin: 20px 40px;
   color: #fff;
-  transition: 0.4s ease-in-out;
+  transition: color 0.3s ease;
 }
 
 #magnify h1:hover {
@@ -107,7 +163,7 @@ header table {
 
 #logo {
   font-size: 28px;
-  color: #735dad;
+  color: var(--accent);
 }
 
 #navigation {
@@ -120,16 +176,20 @@ header table {
   padding: 5px 10px;
   border-bottom: 2px solid transparent;
   margin-left: 4vw;
-  transition: 0.4s ease-in-out;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 #navigation a:hover {
-  border-bottom: 2px solid #252422;
+  border-bottom: 2px solid var(--bg);
+}
+
+header.scrolled #navigation a:hover {
+  border-bottom: 2px solid var(--accent-pink);
 }
 
 #top_part {
   width: 100%;
-  border: 2vh solid #252422;
+  border: 2vh solid var(--bg);
 }
 
 #top_part tr td {
@@ -167,12 +227,12 @@ header table {
 }
 
 .social {
-  color: #735dad;
+  color: var(--accent);
   font-size: 23px;
   padding: 12px 17px;
   border-radius: 50%;
   background: transparent;
-  transition: 0.4s ease-in-out;
+  transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
   font-weight: bold;
   margin: 0px 8px;
 }
@@ -180,28 +240,28 @@ header table {
 .social:hover {
   cursor: pointer;
   color: #fff;
-  background: #c83a69;
-  box-shadow: 0px 0px 30px #339fc8;
+  background: var(--accent-pink);
+  box-shadow: 0px 0px 30px var(--accent-blue);
 }
 
 .btn_one {
   font-size: 18px;
   color: #fff;
-  background: #339fc8;
-  border: 0px solid #c83a69;
+  background: var(--accent-blue);
+  border: 0px solid var(--accent-pink);
   padding: 8px 40px;
   width: 35%;
   border-radius: 80px;
   font-weight: bold;
   margin: 2vh 0px;
-  transition: 0.4s ease-in-out;
+  transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn_one:hover {
   box-shadow: 0px 0px 30px #000;
   cursor: pointer;
   color: #fff;
-  background: #c83a69;
+  background: var(--accent-pink);
 }
 
 #rightImage {
@@ -221,7 +281,7 @@ header table {
 
 #work h1 {
   padding: 5px 0px;
-  border-bottom: 4px solid #735dad;
+  border-bottom: 4px solid var(--accent);
   width: 6%;
 }
 
@@ -233,7 +293,7 @@ header table {
 
 #skills h1 {
   padding: 5px 0px;
-  border-bottom: 4px solid #735dad;
+  border-bottom: 4px solid var(--accent);
   width: 6%;
 }
 
@@ -265,7 +325,7 @@ header table {
 
 #bio h1 {
   padding: 5px 0px;
-  border-bottom: 4px solid #735dad;
+  border-bottom: 4px solid var(--accent);
   width: 8%;
 }
 
@@ -276,7 +336,7 @@ header table {
 
 #contact h1 {
   padding: 5px 0px;
-  border-bottom: 4px solid #735dad;
+  border-bottom: 4px solid var(--accent);
   width: 10%;
 }
 
@@ -309,11 +369,11 @@ header table {
   margin: 20px 1%;
   background: transparent;
   border: 0px;
-  border-bottom: 3px solid #735dad;
+  border-bottom: 3px solid var(--input-border);
   padding: 8px 10px;
   font-size: 18px;
-  transition: 0.4s ease-in-out;
-  color: #fff;
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+  color: var(--text);
   font-weight: bold;
 }
 
@@ -322,24 +382,24 @@ header table {
   margin: 20px 1%;
   padding: 8px 10px;
   border: 0px;
-  border-bottom: 3px solid #735dad;
+  border-bottom: 3px solid var(--input-border);
   padding: 8px 10px;
   font-size: 18px;
   background: transparent;
   resize: none;
-  transition: 0.4s ease-in-out;
-  color: #fff;
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+  color: var(--text);
   font-weight: bold;
 }
 
 #contact form input:focus {
   outline: none;
-  border-bottom: 3px solid #735dad;
+  border-bottom: 3px solid var(--input-border);
 }
 
 #contact form textarea:focus {
   outline: none;
-  border-bottom: 3px solid #735dad;
+  border-bottom: 3px solid var(--input-border);
 }
 
 #address {
@@ -356,12 +416,12 @@ header table {
 }
 
 #footer a {
-  color: #735dad;
+  color: var(--accent);
   text-decoration: none;
 }
 
 ::placeholder {
-  color: #6c6c6c;
+  color: var(--text-muted);
 }
 
 button:focus {
@@ -371,19 +431,19 @@ button:focus {
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
-  background: #f970a1;
+  background: var(--accent-pink);
 }
 
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #f970a1;
+  background: var(--accent-pink);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #735dad;
+  background: var(--accent);
 }
 
 @media (max-width: 890px) {
@@ -435,13 +495,13 @@ button:focus {
     padding: 6px 30px;
     width: 60%;
     margin: 4vh auto;
-    box-shadow: 0px 10px 20px #339fc8;
-    background: #339fc8;
+    box-shadow: 0px 10px 20px var(--accent-blue);
+    background: var(--accent-blue);
     color: #ffffff;
   }
 
   .btn_one:hover {
-    box-shadow: 0px 10px 40px #cf408f;
+    box-shadow: 0px 10px 40px var(--accent-pink);
     cursor: pointer;
   }
 
@@ -476,7 +536,7 @@ button:focus {
 
   header {
     width: 96vw;
-    background: #292825;
+    background: var(--bg-secondary);
     padding: 4vh 2vw;
     position: absolute;
   }
@@ -489,7 +549,7 @@ button:focus {
   }
 
   #navigation a {
-    color: #000;
+    color: var(--text);
   }
 }
 
@@ -555,19 +615,83 @@ button:focus {
 #vcardButton {
   font-size: 18px;
   color: #fff;
-  background: #339fc8;
-  border: 0px solid #c83a69;
+  background: var(--accent-blue);
+  border: 0px solid var(--accent-pink);
   padding: 8px 40px;
   width: 50%;
   border-radius: 80px;
   font-weight: bold;
   margin: 2vh 0px;
-  transition: 0.4s ease-in-out;
+  transition: color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #vcardButton:hover {
   box-shadow: 0px 0px 30px #000;
   cursor: pointer;
   color: #fff;
-  background: #c83a69;
+  background: var(--accent-pink);
+}
+
+/* ── Theme toggle button ─────────────────────────────────────────────────────── */
+#themeToggle {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--text);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 0;
+  line-height: 1;
+  float: right;
+  position: relative;
+}
+
+#themeToggle:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0px 0px 12px var(--accent);
+}
+
+#themeToggle:focus {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+#moonIcon,
+#sunIcon {
+  position: absolute;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    opacity 0.3s ease;
+}
+
+/* Light theme - show moon, hide sun */
+[data-theme="light"] #moonIcon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  visibility: visible;
+}
+
+[data-theme="light"] #sunIcon {
+  opacity: 0;
+  transform: rotate(180deg) scale(0.5);
+  visibility: hidden;
+}
+
+/* Dark theme - show sun, hide moon */
+[data-theme="dark"] #sunIcon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  visibility: visible;
+}
+
+[data-theme="dark"] #moonIcon {
+  opacity: 0;
+  transform: rotate(-180deg) scale(0.5);
+  visibility: hidden;
 }

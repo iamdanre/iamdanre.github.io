@@ -63,7 +63,26 @@ svg {
 }
 
 .theme-transitioning * {
-  will-change: background-color, color, border-color;
+  will-change: background-color, color, border-color, fill, stroke;
+}
+
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition-property: background-color, color, border-color, box-shadow, fill, stroke !important;
+  transition-duration: 0.4s !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-delay: 0s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transitioning,
+  .theme-transitioning *,
+  .theme-transitioning *::before,
+  .theme-transitioning *::after {
+    transition-duration: 0s !important;
+  }
 }
 
 :root {
@@ -196,7 +215,7 @@ button {
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
   cursor: pointer;
   pointer-events: auto;
 }
@@ -249,7 +268,7 @@ button {
   margin: 0 auto 1.25rem auto;
   opacity: 0.8;
   cursor: grab;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, width 0.3s ease, background-color 0.3s ease;
 }
 
 .modal-content:hover::before {
@@ -375,7 +394,11 @@ button {
   outline: 0;
   cursor: pointer;
   box-sizing: border-box;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    border-color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    background-color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
   color: white;
@@ -405,7 +428,7 @@ button {
 #copyURL:active,
 #dlKey:active {
   transform: translateY(0) scale(0.98);
-  transition: all 0.1s ease;
+  transition: transform 0.1s ease;
 }
 
 #copyURL span,
@@ -444,7 +467,7 @@ button {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 1rem;
   box-shadow: 0 4px 16px var(--shadow-light);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 #qr:hover {
@@ -560,7 +583,10 @@ header {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out,
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease-out,
     transform 0.3s ease-out;
   box-shadow: 0 2px 8px var(--shadow-light);
   width: 100%;
@@ -630,7 +656,9 @@ main {
   -ms-user-select: none;
   user-select: none;
   margin-top: max(0.5rem, calc(var(--safe-area-top) * 0.3));
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-out,
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s ease-out,
     transform 0.4s ease-out;
   border-radius: 50%;
   box-shadow: 0 8px 32px var(--shadow-medium), 0 0 0 4px var(--glass-bg),
@@ -735,7 +763,10 @@ main {
   gap: 0.5rem;
   padding: 1rem;
   border-radius: 0.75rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out,
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease-out,
     transform 0.3s ease-out;
   color: white;
   position: relative;
@@ -744,17 +775,16 @@ main {
   border: 1px solid var(--glass-border);
 }
 
+.action-button .iconColor,
+.action-button span {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    fill 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 [data-theme="light"] .action-button .iconColor,
 [data-theme="light"] .action-button span {
   color: #1a1a1a;
-}
-
-[data-theme="light"] .action-button .iconColor svg path[style*="stroke: #fff"] {
-  stroke: #1a1a1a !important;
-}
-
-[data-theme="light"] .action-button .iconColor svg path[style*="fill: #fff"] {
-  fill: #1a1a1a !important;
 }
 
 .action-button:hover {
@@ -774,7 +804,7 @@ main {
 
 .action-button:active {
   transform: translateY(-1px) scale(0.95);
-  transition: all 0.1s ease;
+  transition: transform 0.1s ease;
 }
 
 .action-button:focus-visible {
@@ -1090,18 +1120,10 @@ input[type="range"]::-webkit-slider-thumb {
   color: var(--text-color);
 }
 
-.theme-transitioning,
-.theme-transitioning *,
-.theme-transitioning *::before,
-.theme-transitioning *::after {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  transition-delay: 0s !important;
-}
-
 .loading {
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .skeleton {
