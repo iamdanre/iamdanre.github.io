@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -38,6 +38,15 @@
     </script>
     <title>danré</title>
     <link rel="stylesheet" href="./style.css" />
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme')
+                var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                document.documentElement.setAttribute('data-theme', theme)
+            } catch (e) {}
+        })()
+    </script>
 </head>
 
 <body id="body">
