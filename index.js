@@ -42,8 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Theme toggle ──────────────────────────────────────────────────────────
   const themeToggleBtn = document.getElementById('themeToggle')
   const savedTheme = localStorage.getItem('theme') ||
-    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
   applyTheme(savedTheme)
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      applyTheme(e.matches ? 'dark' : 'light')
+    }
+  })
 
   themeToggleBtn.addEventListener('click', (e) => {
     e.stopPropagation() // prevent header click-to-top triggering

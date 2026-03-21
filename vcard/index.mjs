@@ -90,24 +90,34 @@ const initializeTheme = () => {
     const themeToggle = document.getElementById('themeToggle')
     const html = document.documentElement
 
-    const setTheme = (theme) => {
+    const applyTheme = (theme) => {
         html.classList.add('theme-transitioning')
         html.setAttribute('data-theme', theme)
-        localStorage.setItem('theme', theme)
         setTimeout(() => {
             html.classList.remove('theme-transitioning')
         }, 500)
     }
 
+    const setTheme = (theme) => {
+        applyTheme(theme)
+        localStorage.setItem('theme', theme)
+    }
+
     const savedTheme = localStorage.getItem('theme')
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
     const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light')
-    setTheme(initialTheme)
+    applyTheme(initialTheme)
 
     themeToggle?.addEventListener('click', () => {
         const currentTheme = html.getAttribute('data-theme')
         const newTheme = currentTheme === 'light' ? 'dark' : 'light'
         setTheme(newTheme)
+    })
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light')
+        }
     })
 }
 
