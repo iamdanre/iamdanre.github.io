@@ -10,8 +10,6 @@ if (workbox) {
         runtime: 'runtime',
     })
 
-    workbox.navigationPreload.enable()
-
     // provide revision information for each asset to allow Workbox to properly manage updates.
     const PRECACHE_ASSETS = [
         { url: './', revision: '2.0.6' }, // alias for index.html
