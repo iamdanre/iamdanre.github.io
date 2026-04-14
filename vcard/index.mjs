@@ -1,6 +1,7 @@
 /* global confetti, localStorage, window, document, navigator, confirm */
 
 import './confetti.min.js'
+import { trigger } from './haptics.js'
 
 import { Workbox } from './workbox-window.prod.mjs'
 
@@ -73,7 +74,7 @@ const initializeWindowControlsOverlay = () => {
             document.documentElement.style.setProperty('--titlebar-area-height', `${titleBarRect.height}px`)
             document.documentElement.style.setProperty('--safe-area-top', `${titleBarRect.height}px`)
             document.documentElement.style.setProperty('--content-top-margin', `${Math.max(titleBarRect.height + 20, 20)}px`)
-            return;
+            return
         }
         document.documentElement.style.setProperty('--safe-area-top', '0px')
         document.documentElement.style.setProperty('--content-top-margin', '20px')
@@ -111,6 +112,7 @@ const initializeTheme = () => {
     themeToggle?.addEventListener('click', () => {
         const currentTheme = html.getAttribute('data-theme')
         const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+        trigger('light')
         setTheme(newTheme)
     })
 
@@ -163,7 +165,7 @@ const initializeModal = () => {
 
         const dismissThreshold = 120
         if (deltaY > dismissThreshold) {
-            if (navigator.vibrate) navigator.vibrate(50)
+            trigger('light')
             toggleVisibility()
             if (modalContent) modalContent.style.transform = 'translateX(-50%) translateY(100%)'
             modal.style.opacity = '0'
@@ -229,6 +231,7 @@ const initializeShare = (toggleModalVisibility) => {
 
     if (navigator.canShare) {
         shareBtn?.addEventListener('click', async () => {
+            trigger('light')
             try {
                 await navigator.share({
                     title: 'danré',
@@ -241,6 +244,7 @@ const initializeShare = (toggleModalVisibility) => {
         })
     } else {
         shareBtn?.addEventListener('click', () => {
+            trigger('medium')
             toggleModalVisibility()
             showView(copyView, qrView)
         })
@@ -252,8 +256,10 @@ const initializeShare = (toggleModalVisibility) => {
         const originalText = iconText.innerText
         try {
             await navigator.clipboard.writeText(window.location.href)
+            trigger('success')
             iconText.innerText = 'copied'
         } catch (error) {
+            trigger('error')
             console.error('Copy to clipboard failed:', error)
             iconText.innerText = 'could not copy'
         } finally {
@@ -270,6 +276,7 @@ const initializeQREvent = (toggleModalVisibility) => {
     const copyView = document.getElementById('copyView')
 
     showQRBtn?.addEventListener('click', () => {
+        trigger('medium')
         toggleModalVisibility()
         if (qrView) qrView.style.display = 'block'
         if (copyView) copyView.style.display = 'none'
@@ -283,6 +290,7 @@ const initializeEasterEgg = () => {
     const triggerConfetti = (event) => {
         event.preventDefault()
         if (prefersReducedMotion || !window.confetti) return
+        trigger('heavy')
 
         const isLowEndDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4
         const particleMultiplier = isLowEndDevice ? 0.5 : 1
@@ -321,6 +329,12 @@ const initializeEasterEgg = () => {
     profilePhoto?.addEventListener('touchstart', handleDoubleTap)
 }
 
+const initializeHaptics = () => {
+    document.querySelectorAll('.action-button').forEach((btn) => {
+        btn.addEventListener('click', () => trigger('light'))
+    })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeWindowControlsOverlay()
     initializeServiceWorker()
@@ -330,4 +344,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeShare(toggleModalVisibility)
     initializeQREvent(toggleModalVisibility)
     initializeEasterEgg()
+    initializeHaptics()
 })
