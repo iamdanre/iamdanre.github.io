@@ -5,7 +5,7 @@ if (workbox) {
 
     workbox.core.setCacheNameDetails({
         prefix: 'danre-vcard',
-        suffix: 'v2.0.5',
+        suffix: 'v2.0.6',
         precache: 'precache',
         runtime: 'runtime',
     })
@@ -14,44 +14,27 @@ if (workbox) {
 
     // provide revision information for each asset to allow Workbox to properly manage updates.
     const PRECACHE_ASSETS = [
-        { url: './', revision: '2.0.5' }, // alias for index.html
-        { url: './index.html', revision: '2.0.5' },
-        { url: './style.css', revision: '2.0.5' },
-        { url: './index.mjs', revision: '2.0.5' },
-        { url: './haptics.js', revision: '2.0.5' },
-        { url: './confetti.min.js', revision: '2.0.5' },
-        { url: './waving.webp', revision: '2.0.5' },
-        { url: './manifest.json', revision: '2.0.5' },
-        { url: '../img/qr.webp', revision: '2.0.5' },
+        { url: './', revision: '2.0.6' }, // alias for index.html
+        { url: './index.html', revision: '2.0.6' },
+        { url: './style.css', revision: '2.0.6' },
+        { url: './index.mjs', revision: '2.0.6' },
+        { url: './haptics.js', revision: '2.0.6' },
+        { url: './confetti.min.js', revision: '2.0.6' },
+        { url: './waving.webp', revision: '2.0.6' },
+        { url: './manifest.json', revision: '2.0.6' },
+        { url: '../img/qr.webp', revision: '2.0.6' },
     ]
 
     workbox.precaching.precacheAndRoute(PRECACHE_ASSETS)
 
     // strategy 1: network first for navigation requests (HTML pages)
+    // using NetworkFirst strategy directly lets Workbox handle preloadResponse internally
     workbox.routing.registerRoute(
-        ({ request }) => request.mode === 'navigate',
-        async ({ event, request }) => {
-            try {
-                // attempt to use the preloaded navigation response.
-                const preloadResponse = await event.preloadResponse
-                if (preloadResponse) {
-                    return preloadResponse
-                }
-
-                // fallback to a network-first strategy for navigation.
-                const networkFirst = new workbox.strategies.NetworkFirst({
-                    cacheName: 'danre-vcard-runtime-html',
-                })
-                return await networkFirst.handle({ request })
-            } catch (error) {
-                // the catch will be triggered if both preload and network fail.
-                // in this case, we fall back to the precached index page.
-                console.warn('fetch failed; returning precached index.', error)
-                const cache = await caches.open(workbox.core.cacheNames.precache)
-                // getCacheKeyForURL will look up the correct URL, even with revisioning.
-                return await cache.match(workbox.precaching.getCacheKeyForURL('./'))
-            }
-        }
+        new workbox.routing.NavigationRoute(
+            new workbox.strategies.NetworkFirst({
+                cacheName: 'danre-vcard-runtime-html',
+            })
+        )
     )
 
     // strategy 2: stale-while-revalidate for CSS and JavaScript
