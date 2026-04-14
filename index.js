@@ -30,6 +30,12 @@ window.addEventListener('scroll', () => {
   }
 })
 
+let resizeTimer
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer)
+  resizeTimer = setTimeout(handleScroll, 100)
+})
+
 // kept globally for backwards compatibility or inline DOM reference
 window.closemagnify = function() {
   trigger('light')
@@ -38,6 +44,8 @@ window.closemagnify = function() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  handleScroll()
+
   // theme toggle
   const themeToggleBtn = document.getElementById('themeToggle')
   const savedTheme = localStorage.getItem('theme') ||
