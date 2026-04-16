@@ -405,7 +405,7 @@ const initializeInstall = (toggleModalVisibility) => {
 
         if (!isIOSSafari()) return
         toggleModalVisibility()
-        if (iosInstallView) iosInstallView.style.display = 'block'
+        if (iosInstallView) iosInstallView.style.display = 'flex'
         if (copyView) copyView.style.display = 'none'
         if (qrView) qrView.style.display = 'none'
     })
@@ -423,7 +423,7 @@ const buildVCard = () => {
         'FN:danré',
         'TEL;TYPE=CELL:+27784585144',
         'EMAIL;TYPE=INTERNET:dev.danre@icloud.com',
-        'URL;TYPE=Website: https://iamdanre.github.io/vcard/',
+        'URL;TYPE=Website:https://iamdanre.github.io/vcard/',
         'URL;TYPE=Telegram:https://t.me/xp_x_qx',
         'URL;TYPE=Instagram:https://instagram.com/_danre_',
         'URL;TYPE=X:https://x.com/xp_x_qx',
@@ -440,10 +440,18 @@ const initializeSaveContact = () => {
         trigger('medium')
         const vcfData = buildVCard()
         const blob = new Blob([vcfData], { type: 'text/vcard' })
-        const file = new File([blob], 'danre.vcf', { type: 'text/vcard' })
+        let file = null
+
+        if (typeof window !== 'undefined' && typeof window.File === 'function') {
+            try {
+                file = new window.File([blob], 'danre.vcf', { type: 'text/vcard' })
+            } catch (error) {
+                console.warn('File constructor is unavailable or unsupported in this browser.', error)
+            }
+        }
 
         // try Web Share API with file
-        if (navigator.canShare?.({ files: [file] })) {
+        if (file && navigator.canShare?.({ files: [file] })) {
             try {
                 await navigator.share({ files: [file], title: 'danré', text: 'Save contact' })
                 trigger('success')
