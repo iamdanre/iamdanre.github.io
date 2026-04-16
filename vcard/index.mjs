@@ -125,7 +125,7 @@ const initializeTheme = () => {
 
 const initializeModal = () => {
     const modal = document.getElementById('modal')
-    if (!modal) return () => {}
+    if (!modal) return () => { }
 
     const modalContent = modal.querySelector('.modal-content')
     const modalBackground = modal.querySelector('.modal-background')
@@ -335,6 +335,148 @@ const initializeHaptics = () => {
     })
 }
 
+const isAlreadyInstalled = () => {
+    if (navigator.standalone === true) return true
+    return window.matchMedia(
+        '(display-mode: standalone), (display-mode: window-controls-overlay), (display-mode: fullscreen)'
+    ).matches
+}
+
+const isIOSSafari = () => {
+    const ua = navigator.userAgent
+    const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    const isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS|Chrome/.test(ua)
+    return isIOS && isSafari
+}
+
+const initializeInstall = (toggleModalVisibility) => {
+    const installBtn = document.getElementById('installApp')
+    const iosInstallView = document.getElementById('iosInstallView')
+    const copyView = document.getElementById('copyView')
+    const qrView = document.getElementById('qrView')
+    if (!installBtn) return
+
+    if (isAlreadyInstalled()) return
+
+    let deferredPrompt = null
+
+    const showInstallButton = () => {
+        document.body.classList.add('install-available')
+        installBtn.style.display = ''
+        if (prefersReducedMotion) {
+            installBtn.style.opacity = '1'
+            installBtn.style.transform = 'none'
+        } else {
+            setTimeout(() => {
+                installBtn.style.opacity = '1'
+                installBtn.style.transform = 'none'
+            }, 100)
+        }
+    }
+
+    const hideInstallButton = () => {
+        document.body.classList.remove('install-available')
+        installBtn.style.display = 'none'
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault()
+        deferredPrompt = e
+        showInstallButton()
+    })
+
+    window.addEventListener('appinstalled', () => {
+        deferredPrompt = null
+        hideInstallButton()
+    })
+
+    installBtn.addEventListener('click', async () => {
+        trigger('medium')
+
+        if (deferredPrompt) {
+            deferredPrompt.prompt()
+            const { outcome } = await deferredPrompt.userChoice
+            if (outcome === 'accepted') {
+                deferredPrompt = null
+                hideInstallButton()
+            }
+            return
+        }
+
+        if (!isIOSSafari()) return
+        toggleModalVisibility()
+        if (iosInstallView) iosInstallView.style.display = 'flex'
+        if (copyView) copyView.style.display = 'none'
+        if (qrView) qrView.style.display = 'none'
+    })
+
+    // on iOS Safari, show the button for the guided install flow
+    if (isIOSSafari()) {
+        showInstallButton()
+    }
+}
+
+const buildVCard = () => {
+    const lines = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'FN:danré',
+        'TEL;TYPE=CELL:+27784585144',
+        'EMAIL;TYPE=INTERNET:dev.danre@icloud.com',
+        'URL;TYPE=Website:https://iamdanre.github.io/vcard/',
+        'URL;TYPE=Telegram:https://t.me/xp_x_qx',
+        'URL;TYPE=Instagram:https://instagram.com/_danre_',
+        'URL;TYPE=X:https://x.com/xp_x_qx',
+        'END:VCARD',
+    ]
+    return lines.join('\r\n')
+}
+
+const initializeSaveContact = () => {
+    const saveBtn = document.getElementById('saveContact')
+    if (!saveBtn) return
+
+    saveBtn.addEventListener('click', async () => {
+        trigger('medium')
+        const vcfData = buildVCard()
+        const blob = new Blob([vcfData], { type: 'text/vcard' })
+        let file = null
+
+        if (typeof window !== 'undefined' && typeof window.File === 'function') {
+            try {
+                file = new window.File([blob], 'danre.vcf', { type: 'text/vcard' })
+            } catch (error) {
+                console.warn('File constructor threw unexpectedly. Falling back to download.', error)
+            }
+        }
+
+        // try Web Share API with file
+        if (file && navigator.canShare?.({ files: [file] })) {
+            try {
+                await navigator.share({ files: [file], title: 'danré', text: 'Save contact' })
+                trigger('success')
+                return
+            } catch (error) {
+                if (error.name === 'AbortError') return
+            }
+        }
+
+        // fallback: direct download
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'danre.vcf'
+        a.style.display = 'none'
+        document.body.appendChild(a)
+        a.click()
+        setTimeout(() => {
+            URL.revokeObjectURL(url)
+            a.remove()
+        }, 100)
+        trigger('success')
+    })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeWindowControlsOverlay()
     initializeServiceWorker()
@@ -343,6 +485,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleModalVisibility = initializeModal()
     initializeShare(toggleModalVisibility)
     initializeQREvent(toggleModalVisibility)
+    initializeInstall(toggleModalVisibility)
+    initializeSaveContact()
     initializeEasterEgg()
     initializeHaptics()
 })

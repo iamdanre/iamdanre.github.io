@@ -5,22 +5,22 @@ if (workbox) {
 
     workbox.core.setCacheNameDetails({
         prefix: 'danre-vcard',
-        suffix: 'v2.0.6',
+        suffix: 'v2.1.0',
         precache: 'precache',
         runtime: 'runtime',
     })
 
     // provide revision information for each asset to allow Workbox to properly manage updates.
     const PRECACHE_ASSETS = [
-        { url: './', revision: '2.0.6' }, // alias for index.html
-        { url: './index.html', revision: '2.0.6' },
-        { url: './style.css', revision: '2.0.6' },
-        { url: './index.mjs', revision: '2.0.6' },
-        { url: './haptics.js', revision: '2.0.6' },
-        { url: './confetti.min.js', revision: '2.0.6' },
-        { url: './waving.webp', revision: '2.0.6' },
-        { url: './manifest.json', revision: '2.0.6' },
-        { url: '../img/qr.webp', revision: '2.0.6' },
+        { url: './', revision: '2.1.0' }, // alias for index.html
+        { url: './index.html', revision: '2.1.0' },
+        { url: './style.css', revision: '2.1.0' },
+        { url: './index.mjs', revision: '2.1.0' },
+        { url: './haptics.js', revision: '2.1.0' },
+        { url: './confetti.min.js', revision: '2.1.0' },
+        { url: './waving.webp', revision: '2.1.0' },
+        { url: './manifest.json', revision: '2.1.0' },
+        { url: '../img/qr.webp', revision: '2.1.0' },
     ]
 
     workbox.precaching.precacheAndRoute(PRECACHE_ASSETS)
