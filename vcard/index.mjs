@@ -446,7 +446,7 @@ const initializeSaveContact = () => {
             try {
                 file = new window.File([blob], 'danre.vcf', { type: 'text/vcard' })
             } catch (error) {
-                console.warn('File constructor is unavailable or unsupported in this browser.', error)
+                console.warn('File constructor threw unexpectedly. Falling back to download.', error)
             }
         }
 
