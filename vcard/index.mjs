@@ -49,7 +49,7 @@ const initializeAnimations = () => {
             el.style.transform = initialTransform
             setTimeout(() => {
                 el.style.opacity = '1'
-                el.style.transform = 'none'
+                el.style.transform = ''
             }, delay + index * 100)
         })
     }
@@ -140,6 +140,8 @@ const initializeModal = () => {
     const toggleVisibility = () => {
         const isHidden = !modal.classList.contains('show')
         if (isHidden) {
+            modal.style.opacity = ''
+            modal.style.transition = ''
             modal.style.visibility = 'visible'
             modal.classList.add('show')
             document.body.addEventListener('touchstart', preventPullToRefresh, { passive: false })
@@ -151,6 +153,8 @@ const initializeModal = () => {
         document.body.removeEventListener('touchmove', preventPullToRefresh)
         setTimeout(() => {
             modal.style.visibility = 'hidden'
+            modal.style.opacity = ''
+            modal.style.transition = ''
             if (modalContent) {
                 modalContent.style.transform = ''
                 modalContent.style.transition = ''
@@ -172,7 +176,8 @@ const initializeModal = () => {
             return
         }
         if (modalContent) modalContent.style.transform = 'translateX(-50%) translateY(0)'
-        modal.style.opacity = '1'
+        modal.style.opacity = ''
+        modal.style.transition = ''
     }
 
     if (modalContent) {
