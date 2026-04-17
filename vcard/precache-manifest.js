@@ -9,16 +9,12 @@ self.__VCARD_PRECACHE_MANIFEST = [
         "revision": "a73e8f96305f6415"
     },
     {
-        "url": "./haptics.js",
-        "revision": "fa46e2dfe22799ac"
-    },
-    {
         "url": "./index.html",
         "revision": "48b09e4a9889a48e"
     },
     {
         "url": "./index.mjs",
-        "revision": "0ac3428b6fc3feff"
+        "revision": "1722459e53012d4e"
     },
     {
         "url": "./manifest.json",
@@ -31,6 +27,10 @@ self.__VCARD_PRECACHE_MANIFEST = [
     {
         "url": "./waving.webp",
         "revision": "a5771164bd3032b6"
+    },
+    {
+        "url": "./webHaptics.mjs",
+        "revision": "3a389ae842733274"
     },
     {
         "url": "./workbox-window.prod.mjs",
