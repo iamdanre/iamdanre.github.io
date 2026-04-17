@@ -1,8 +1,6 @@
-/* global confetti, localStorage, window, document, navigator, confirm */
+/* global localStorage, window, document, navigator */
 
-import './confetti.min.js'
 import { trigger } from './haptics.js'
-
 import { Workbox } from './workbox-window.prod.mjs'
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -11,13 +9,9 @@ const initializeServiceWorker = () => {
     if ('serviceWorker' in navigator) {
         const wb = new Workbox('./sw.js')
 
-        wb.addEventListener('installed', (event) => {
-            if (event.isUpdate) {
-                console.info('New service worker available. Refresh to update.')
-                if (confirm('A new version is available. Refresh to update?')) {
-                    window.location.reload()
-                }
-            }
+        wb.addEventListener('waiting', () => {
+            console.info('New service worker available. Waiting for user prompt.')
+            showUpdateToast(wb)
         })
 
         wb.register()
@@ -32,6 +26,40 @@ const initializeServiceWorker = () => {
         return
     }
     console.warn('Service worker is not supported in this browser.')
+}
+
+const showUpdateToast = (wb) => {
+    let toast = document.getElementById('updateToast')
+    if (!toast) {
+        toast = document.createElement('div')
+        toast.id = 'updateToast'
+        toast.setAttribute('role', 'alert')
+        toast.setAttribute('aria-live', 'polite')
+        toast.innerHTML =
+            '<span>A new version is available.</span>' +
+            '<button type="button" id="updateToastRefresh">Refresh</button>' +
+            '<button type="button" id="updateToastDismiss" aria-label="Dismiss">Later</button>'
+        document.body.appendChild(toast)
+
+        toast.querySelector('#updateToastRefresh').addEventListener('click', () => {
+            trigger('light')
+            toast.classList.remove('show')
+
+            wb.addEventListener('controlling', () => {
+                window.location.reload()
+            })
+
+            wb.messageSkipWaiting()
+        })
+        toast.querySelector('#updateToastDismiss').addEventListener('click', () => {
+            trigger('light')
+            toast.classList.remove('show')
+        })
+    }
+
+    requestAnimationFrame(() => {
+        toast.classList.add('show')
+    })
 }
 
 const initializeAnimations = () => {
@@ -117,9 +145,7 @@ const initializeTheme = () => {
     })
 
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            applyTheme(e.matches ? 'dark' : 'light')
-        }
+        if (!localStorage.getItem('theme')) applyTheme(e.matches ? 'dark' : 'light')
     })
 }
 
@@ -132,6 +158,7 @@ const initializeModal = () => {
 
     let startY = 0
     let isDragging = false
+    let ticking = false
 
     const preventPullToRefresh = (e) => {
         if (modal.classList.contains('show')) e.preventDefault()
@@ -198,12 +225,18 @@ const initializeModal = () => {
                 if (!isDragging) return
                 const currentY = e.touches[0].clientY
                 const deltaY = currentY - startY
-                if (deltaY <= 0) {
-                    return
-                }
+                if (deltaY <= 0) return
+
                 e.preventDefault()
-                modalContent.style.transform = `translateX(-50%) translateY(${deltaY}px)`
-                modal.style.opacity = String(Math.max(1 - deltaY / 400, 0.2))
+
+                if (!ticking) { // optimize dragging via requestAnimationFrame (prevent layout thrash)
+                    window.requestAnimationFrame(() => {
+                        modalContent.style.transform = `translateX(-50%) translateY(${deltaY}px)`
+                        modal.style.opacity = String(Math.max(1 - deltaY / 400, 0.2))
+                        ticking = false
+                    })
+                    ticking = true
+                }
             },
             { passive: false }
         )
@@ -292,13 +325,18 @@ const initializeEasterEgg = () => {
     let lastTap = 0
     const profilePhoto = document.getElementById('profilePhoto')
 
-    const triggerConfetti = (event) => {
+    const triggerConfetti = async (event) => {
         event.preventDefault()
-        if (prefersReducedMotion || !window.confetti) return
+        if (prefersReducedMotion) return
         trigger('heavy')
+
+        if (!window.confetti) { // dynamic import: load confetti lib if user finds easter egg
+            await import('./confetti.module.min.mjs')
+        }
 
         const isLowEndDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4
         const particleMultiplier = isLowEndDevice ? 0.5 : 1
+
         const fire = (particleRatio, opts) => {
             window.confetti({
                 origin: { y: 0.7 },
@@ -415,10 +453,7 @@ const initializeInstall = (toggleModalVisibility) => {
         if (qrView) qrView.style.display = 'none'
     })
 
-    // on iOS Safari, show the button for the guided install flow
-    if (isIOSSafari()) {
-        showInstallButton()
-    }
+    if (isIOSSafari()) showInstallButton() // on iOS Safari, show the button for the guided install flow
 }
 
 const buildVCard = () => {
@@ -455,8 +490,7 @@ const initializeSaveContact = () => {
             }
         }
 
-        // try Web Share API with file
-        if (file && navigator.canShare?.({ files: [file] })) {
+        if (file && navigator.canShare?.({ files: [file] })) { // try Web Share API with file
             try {
                 await navigator.share({ files: [file], title: 'danré', text: 'Save contact' })
                 trigger('success')
