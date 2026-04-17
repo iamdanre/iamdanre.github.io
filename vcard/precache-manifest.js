@@ -18,7 +18,7 @@ self.__VCARD_PRECACHE_MANIFEST = [
     },
     {
         "url": "./index.mjs",
-        "revision": "93374400a1277f8b"
+        "revision": "0ac3428b6fc3feff"
     },
     {
         "url": "./manifest.json",

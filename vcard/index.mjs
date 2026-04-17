@@ -331,7 +331,8 @@ const initializeEasterEgg = () => {
         trigger('heavy')
 
         if (!window.confetti) { // dynamic import: load confetti lib if user finds easter egg
-            await import('./confetti.module.min.mjs')
+            const { default: confetti } = await import('./confetti.module.min.mjs')
+            window.confetti = confetti
         }
 
         const isLowEndDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4
